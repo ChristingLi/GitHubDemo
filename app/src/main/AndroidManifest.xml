@@ -43,6 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.cn.HorizontalScroll.SlidingActivity"></activity>
+        <activity android:name="com.cn.ViewDarg.DragViewHelperActivity"></activity>
     </application>
 
 </manifest>

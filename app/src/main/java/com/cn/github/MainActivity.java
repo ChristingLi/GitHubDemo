@@ -1,5 +1,6 @@
 package com.cn.github;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -17,8 +18,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.cn.HorizontalScroll.SlidingActivity;
 import com.cn.Utils.HttpUtils;
 import com.cn.Utils.ToastUtil;
+import com.cn.ViewDarg.DragViewHelperActivity;
+import com.cn.ViewDarg.DragViewLayout;
 import com.cn.app.MyApplication;
 import com.cn.base.LoginLogic;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -46,10 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initViews();
         initEvent();
     }
-
-
-
-
     private void initEvent(){
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +93,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if(id == R.id.nav_1){
             ToastUtil.showShortToastCenter("Home Page");
+            Intent mIntent = new Intent(MainActivity.this, SlidingActivity.class);
+            startActivity(mIntent);
         }else if(id == R.id.nav_2){
             ToastUtil.showShortToastCenter("Picture");
         }else if(id == R.id.nav_3){
             ToastUtil.showShortToastCenter("Mine");
         }else if(id == R.id.nav_4){
             ToastUtil.showShortToastCenter("Praise");
+            Intent mIntent = new Intent(MainActivity.this, DragViewHelperActivity.class);
+            startActivity(mIntent);
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
