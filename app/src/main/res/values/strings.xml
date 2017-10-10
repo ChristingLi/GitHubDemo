@@ -19,4 +19,6 @@
     <string name="network_timeout">网络请求超时，请重试</string>
     <string name="network_unavailable">网络连接不可用</string>
     <!-- 公共字段 end-->
+    <string name="navigation_drawer_open">Open navagation drawer</string>
+    <string name="navigation_drawer_close">Close navagation drawer</string>
 </resources>
