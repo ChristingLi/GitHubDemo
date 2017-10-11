@@ -3,7 +3,6 @@ package com.cn.github;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,10 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,17 +19,15 @@ import com.cn.HorizontalScroll.SlidingActivity;
 import com.cn.Utils.HttpUtils;
 import com.cn.Utils.ToastUtil;
 import com.cn.ViewDarg.DragViewHelperActivity;
-import com.cn.ViewDarg.DragViewLayout;
-import com.cn.app.MyApplication;
+import com.cn.ViewDarg.HorizontalDragActivity;
+import com.cn.Application.MyApplication;
 import com.cn.base.LoginLogic;
 import com.zhy.http.okhttp.callback.StringCallback;
-import com.zhy.http.okhttp.https.HttpsUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import okhttp3.Call;
-import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -99,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ToastUtil.showShortToastCenter("Picture");
         }else if(id == R.id.nav_3){
             ToastUtil.showShortToastCenter("Mine");
+            Intent mIntent = new Intent(MainActivity.this, HorizontalDragActivity.class);
+            startActivity(mIntent);
         }else if(id == R.id.nav_4){
             ToastUtil.showShortToastCenter("Praise");
             Intent mIntent = new Intent(MainActivity.this, DragViewHelperActivity.class);

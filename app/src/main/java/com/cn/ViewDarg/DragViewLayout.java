@@ -1,12 +1,13 @@
 package com.cn.ViewDarg;
 
 import android.content.Context;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.cn.Utils.LogUtil;
 
 
 /**
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
  * ViewDragHelper 手势滑动辅助工具
  */
 public class DragViewLayout extends ViewGroup{
+    private static final  String TAG = "dragviewlayout";
     public ViewDragHelper mViewDragHelper;
     private boolean isOpen = true;
     private View mMenuView;
@@ -31,12 +33,20 @@ public class DragViewLayout extends ViewGroup{
         super(context, attrs, defStyleAttr);
         init();
     }
+
+    /**
+     * 布局大小
+     * @param b
+     * @param i
+     * @param i1
+     * @param i2
+     * @param i3
+     */
     @Override
     protected void onLayout(boolean b, int i, int i1, int i2, int i3) {
         mMenuView.layout(0,0,mMenuView.getMeasuredWidth(),
                 mMenuView.getMeasuredHeight());
-        mContentView.layout(0,mCurrentTop + mMenuView.getHeight(),
-                mContentView.getMeasuredWidth(),
+        mContentView.layout(0,mCurrentTop + mMenuView.getHeight(), mContentView.getMeasuredWidth(),
                 mCurrentTop + mContentView.getMeasuredHeight() + mMenuView.getHeight());
     }
     private void init() {
@@ -52,22 +62,38 @@ public class DragViewLayout extends ViewGroup{
         }
         @Override
         public void onEdgeDragStarted(int edgeFlags, int pointerId) {
-            super.onEdgeDragStarted(edgeFlags, pointerId);
+//            super.onEdgeDragStarted(edgeFlags, pointerId);
             /*setEdgeTrackingEnable设置的边界滑动触发*/
             /*通过captureChildView对其进行捕捉，该方法可以绕过tryCaptureView*/
-//            mViewDragHelper.captureChildView(mContentView,pointerId);
+            mViewDragHelper.captureChildView(mContentView,pointerId);
         }
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
             /*手指触摸移动时回调，left表示 要到达的 x坐标*/
             return super.clampViewPositionHorizontal(child, left, dx);
         }
+        /**
+         * 滑动最终可以到达的位置
+         * @param child
+         * @param top
+         * @param dy
+         * @return
+         */
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
             /*手指触摸移动时回调 top表示 要到达的 y坐标*/
 //            return super.clampViewPositionVertical(child, top, dy);
+            LogUtil.d(TAG,"top:"+top);
+            LogUtil.d(TAG,"mMenuView.getHeight():"+mMenuView.getHeight());
             return Math.max(Math.min(top,mMenuView.getHeight()),0);
         }
+
+        /**
+         * 松开手指回调
+         * @param releasedChild
+         * @param xvel
+         * @param yvel
+         */
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             /*手指抬起释放时回调*/

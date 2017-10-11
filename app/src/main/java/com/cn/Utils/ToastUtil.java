@@ -3,7 +3,7 @@ package com.cn.Utils;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.cn.app.MyApplication;
+import com.cn.Application.MyApplication;
 
 /**
  * Created by ld on 2017/10/9.
