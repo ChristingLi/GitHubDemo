@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -32,4 +31,11 @@ dependencies {
     implementation 'com.squareup.okio:okio:1.13.0'
     implementation files('libs/okhttputils-2_6_2.jar')
     implementation 'com.android.support:design:26.1.0'
+    compile 'com.orhanobut:logger:2.1.1'
+    compile 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.alibaba:fastjson:1.2.39'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'org.greenrobot:greendao:3.0.1'
+    compile 'org.greenrobot:greendao-generator:3.0.0'
 }

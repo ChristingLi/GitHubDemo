@@ -15,18 +15,40 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.cn.Bean.JsonEntity;
 import com.cn.HorizontalScroll.SlidingActivity;
+import com.cn.Train.FarstJsonTrain;
 import com.cn.Utils.HttpUtils;
 import com.cn.Utils.ToastUtil;
 import com.cn.ViewDarg.DragViewHelperActivity;
 import com.cn.ViewDarg.HorizontalDragActivity;
 import com.cn.Application.MyApplication;
 import com.cn.base.LoginLogic;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.DiskLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -37,14 +59,97 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+    String json = "{\"name\":\"chenggang\",\"age\":24}";
+    String arrayAyy = "[[\'马云',50],null,[\'马化腾',30]]";
+
+    /*butter knife*/
+    @BindView(R.id.btn_entity)
+    Button mbtEntity;
+    @BindViews({R.id.btn_list,R.id.btn_byte,R.id.btn_complex,R.id.btn_json})
+    List<Button> buttons;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initViews();
         initEvent();
     }
+    @OnClick(R.id.btn_entity)
+    public void entity(View view){
+        String name = "toJsonNmae";
+        FarstJsonTrain.entity(name);
+    }
+    @OnClick(R.id.btn_list)
+    public void list(View view){
+        FarstJsonTrain.list();
+    }
+    @OnClick(R.id.btn_byte)
+    public void bytes(View view){
+        FarstJsonTrain.bytes(arrayAyy);
+    }
+    @OnClick(R.id.btn_complex)
+    public void comples(View view){
+        FarstJsonTrain.comlpex();
+    }
+    @OnClick(R.id.btn_json)
+    public void json(View view){
+        JsonEntity entity = JSON.parseObject(json,JsonEntity.class);
+        Logger.d("姓名是："+entity.getName()+",年龄是："+entity.getAge());
+    }
+    private void Logger() {
+        Logger.addLogAdapter(new AndroidLogAdapter());
+        Logger.d(TAG);
+        Logger.clearLogAdapters();
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(true)
+                .methodCount(0)
+                .methodOffset(3)
+                .tag("tag")
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        Logger.addLogAdapter(new AndroidLogAdapter(){
+            @Override
+            public boolean isLoggable(int priority, String tag) {
+                return BuildConfig.DEBUG;
+            }
+        });
+        Logger.addLogAdapter(new DiskLogAdapter());
+        Logger.w("no thread info and only 1 method");
+
+        Logger.clearLogAdapters();
+        formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)
+                .methodCount(0)
+                .build();
+
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        Logger.i("no thread info and method info");
+
+        Logger.t("tag").e("Custom tag for only one use");
+
+        Logger.json("{ \"key\": 3, \"value\": something}");
+
+        Logger.d(Arrays.asList("foo", "bar"));
+
+        Map<String, String> map = new HashMap<>();
+        map.put("key", "value");
+        map.put("key1", "value2");
+
+        Logger.d(map);
+
+        Logger.clearLogAdapters();
+        formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)
+                .methodCount(0)
+                .tag("MyTag")
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+
+        Logger.w("my log message with my tag");
+    }
+
     private void initEvent(){
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvTest = findViewById(R.id.test_text);
         btnTest = findViewById(R.id.test_btn);
         mNavigationView = findViewById(R.id.design_navigation_view);
+        mbtEntity = findViewById(R.id.btn_entity);
         initToolbar();
     }
 

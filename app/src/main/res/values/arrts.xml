@@ -6,4 +6,11 @@
         <attr name="rightPadding" />
         <attr name="drawerType" />
     </declare-styleable>
+    <declare-styleable name="DragMenuLayout">
+        <attr name="dragRange" format="float" />
+        <attr name="style">
+            <enum name="Translate" value="0" />
+            <enum name="Scale" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

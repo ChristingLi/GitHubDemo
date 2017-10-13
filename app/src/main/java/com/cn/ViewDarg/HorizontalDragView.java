@@ -37,23 +37,47 @@ public class HorizontalDragView extends ViewGroup{
         final float minVel = MIN_FLING_VELOCITY * density;
         /*距离父容器右边边距*/
         mMinDrawerMargin = (int) (MIN_DRAWER_MARGIN * density + 0.5f);
-//        mMinDrawerMargin = 100;
-        mViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
+        mViewDragHelper = ViewDragHelper.create(this, new ViewDragHelper.Callback() {
             /*移动时控制范围*/
+            /**
+             * 获得水平方向的滑动距离, 默认为0, 不滑动
+             * left: 水平方向滑动距离
+             * dx: 滑动增量, 距上次滑动距离
+             * @param child
+             * @param left
+             * @param dx
+             * @return
+             */
             @Override
             public int clampViewPositionHorizontal(View child, int left, int dx) {
-
                 int newLeft = Math.max(-child.getWidth(),Math.min(left,0));
-                LogUtil.d(TAG,"left:" +left);
-                LogUtil.d(TAG,"newLeft:" +newLeft);
-                LogUtil.d(TAG,"-child.getWidth():" +-child.getWidth());
                 return newLeft;
             }
+            /**
+             * 获得垂直方向的滑动距离, 默认为0, 不滑动
+             * top: 垂直方向滑动距离
+             * dy: 滑动增量, 距上次滑动距离
+             * @param child
+             * @param top
+             * @param dy
+             * @return
+             */
+            @Override
+            public int clampViewPositionVertical(View child, int top, int dy) {
+                return super.clampViewPositionVertical(child, top, dy);
+            }
             /*Drawer拉出时 我们通过拖拽drawer也能进行滑动菜单*/
+            /**
+             *何时开始检测触摸事件, 返回true, 一直检测触摸事件, 返回false, 不检测.
+             * @param child
+             * @param pointerId
+             * @return
+             */
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
                 LogUtil.d(TAG,"tryCaptureView");
-                return child == mLeftMenuView;
+//                return child == mLeftMenuView;
+                return true;
             }
             /*设置边界检测 因为View不可见，无法通过触摸到它来把menuView设置称captureView*/
             @Override
@@ -64,6 +88,12 @@ public class HorizontalDragView extends ViewGroup{
             /*释放时触发
             当xvel > 0 || xvel == 0 && offset > 0.5f显示我们的菜单，其他情况隐藏。
             这里注意一点xvel的值只有大于我们设置的minVelocity才会出现大于0，如果小于我们设置的值则一直是0。*/
+            /**
+             * 滑动结束后,回调此方法
+             * @param releasedChild
+             * @param xvel
+             * @param yvel
+             */
             @Override
             public void onViewReleased(View releasedChild, float xvel, float yvel) {
                 LogUtil.d(TAG,"onViewReleased");
@@ -73,6 +103,19 @@ public class HorizontalDragView extends ViewGroup{
                 invalidate();
             }
             /*整个pos变化的过程中，我们计算offset保存，这里可以使用接口将offset回调出去，方便做动画。*/
+            /**
+             * 当view的位置发生变化时回调
+             * changedView: 位置改变的控件
+             * left: 水平方向移动的距离
+             * top: 垂直方向移动距离
+             * dx: 水平方向增量
+             * dy: 垂直方向增量
+             * @param changedView
+             * @param left
+             * @param top
+             * @param dx
+             * @param dy
+             */
             @Override
             public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
                 LogUtil.d(TAG,"onViewPositionChanged"+left);
@@ -84,9 +127,19 @@ public class HorizontalDragView extends ViewGroup{
                 invalidate();
             }
             /*返回captureView的移动范围*/
+            /**
+             * 设置水平方向可以滑动的范围, 对应设置垂直方向滑动范围接口getViewVerticalDragRange
+             * @param child
+             * @return
+             */
             @Override
             public int getViewHorizontalDragRange(View child) {
                 return mLeftMenuView == child ? child.getWidth() : 0;
+            }
+
+            @Override
+            public void onViewCaptured(View capturedChild, int activePointerId) {
+                super.onViewCaptured(capturedChild, activePointerId);
             }
         });
         /*设置edge_left track */
@@ -118,12 +171,19 @@ public class HorizontalDragView extends ViewGroup{
         View menuView = mLeftMenuView;
         View contentView = mContentView;
         MarginLayoutParams lp = (MarginLayoutParams) contentView.getLayoutParams();
-        contentView.layout(lp.leftMargin,lp.topMargin,lp.leftMargin + contentView.getMeasuredWidth(),
+        contentView.layout(lp.leftMargin,
+                lp.topMargin,
+                lp.leftMargin + contentView.getMeasuredWidth(),
                 lp.rightMargin + contentView.getMeasuredHeight());
         lp = (MarginLayoutParams) menuView.getLayoutParams();
+
         final int menuWidth = menuView.getMeasuredWidth();
+
         int childLeft = (int) (- menuWidth + (menuWidth * mLeftMenuOnScreen));
-        menuView.layout(childLeft,lp.topMargin,childLeft + menuWidth,lp.topMargin + menuView.getMeasuredHeight());
+        menuView.layout(childLeft,
+                lp.topMargin,
+                childLeft + menuWidth,
+                lp.topMargin + menuView.getMeasuredHeight());
     }
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {

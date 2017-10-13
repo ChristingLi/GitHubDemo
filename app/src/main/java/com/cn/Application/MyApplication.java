@@ -3,6 +3,10 @@ package com.cn.Application;
 import android.app.Application;
 import android.content.Context;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
@@ -30,6 +34,13 @@ public class MyApplication extends Application{
         mContext = getApplicationContext();
         /*配置okhttp*/
         initOkhttp();
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(true)
+                .methodCount(0)
+                .methodOffset(3)
+                .tag("tag")
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
     }
     /* 获取系统上下文 */
     public static Context getAppContext(){
