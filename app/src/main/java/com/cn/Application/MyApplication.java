@@ -3,6 +3,9 @@ package com.cn.Application;
 import android.app.Application;
 import android.content.Context;
 
+import com.cn.DbFile.DaoMaster;
+import com.cn.DbFile.DaoSession;
+import com.cn.DbFile.GreenDaoEntityDao;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -41,7 +44,19 @@ public class MyApplication extends Application{
                 .tag("tag")
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+//        InitGreenDao();
+
     }
+
+    private void InitGreenDao() {
+    /*初始化数据库
+    * */
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(MyApplication.getAppContext(),"notes-db",null);
+        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        GreenDaoEntityDao greenDaoEntityDao = daoSession.getGreenDaoEntityDao();
+    }
+
     /* 获取系统上下文 */
     public static Context getAppContext(){
         return mContext;

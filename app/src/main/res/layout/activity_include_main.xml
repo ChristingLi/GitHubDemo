@@ -82,5 +82,23 @@
             android:layout_weight="1"
             android:text="Json转化实体"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_green_insert"
+            android:textAllCaps="false"
+            android:text="GreenDao添加数据"/>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_green_read"
+            android:textAllCaps="false"
+            android:text="GreenDao读取数据"/>
+    </LinearLayout>
 
 </LinearLayout>

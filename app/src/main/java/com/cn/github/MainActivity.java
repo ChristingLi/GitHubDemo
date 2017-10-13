@@ -16,10 +16,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.cn.Bean.JsonEntity;
+import com.cn.DbFile.GreenDaoEntity;
+import com.cn.DbFile.GreenDaoEntityDao;
 import com.cn.HorizontalScroll.SlidingActivity;
 import com.cn.Train.FarstJsonTrain;
+import com.cn.Utils.GreenDaoManager;
 import com.cn.Utils.HttpUtils;
 import com.cn.Utils.ToastUtil;
 import com.cn.ViewDarg.DragViewHelperActivity;
@@ -37,13 +39,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -61,11 +60,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigationView;
     String json = "{\"name\":\"chenggang\",\"age\":24}";
     String arrayAyy = "[[\'马云',50],null,[\'马化腾',30]]";
-
+    private GreenDaoEntityDao dao;
     /*butter knife*/
     @BindView(R.id.btn_entity)
     Button mbtEntity;
-    @BindViews({R.id.btn_list,R.id.btn_byte,R.id.btn_complex,R.id.btn_json})
+    @BindViews({R.id.btn_list,R.id.btn_byte,R.id.btn_complex,R.id.btn_json,R.id.btn_green_insert,R.id.btn_green_read})
     List<Button> buttons;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +72,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        dao = GreenDaoManager.getInstance().getGreedDaoSession().getGreenDaoEntityDao();
         initViews();
         initEvent();
+    }
+    @OnClick(R.id.btn_green_insert)
+    public void greedDaoInsert(){
+
+        GreenDaoEntity entity = new GreenDaoEntity(null,"GreenDao");
+//        entity.setId(null);null
+//        entity.setName("GreenDao");
+        dao.insert(entity);
+    }
+    @OnClick(R.id.btn_green_read)
+    public void greedDaoRead(View view){
+        List<GreenDaoEntity> list = dao.queryBuilder()
+                .where(GreenDaoEntityDao.Properties.Id.notEq(999))
+                .limit(5)
+                .build().list();
+        Logger.d(list.size());
+        Logger.d(list.get(0).getName()+"--"+list.get(1).getName());
+
     }
     @OnClick(R.id.btn_entity)
     public void entity(View view){
