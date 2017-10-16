@@ -12,12 +12,12 @@ import com.zhy.http.okhttp.callback.StringCallback;
  */
 
 public class LoginLogic extends  BaseLogic{
-    private static LoginLogic _Instance = null;
+    private static LoginLogic Instance = null;
     public static LoginLogic Instance(Context context){
-        if(_Instance == null){
-            _Instance = new LoginLogic(context);
+        if(Instance == null){
+            Instance = new LoginLogic(context);
         }
-        return _Instance;
+        return Instance;
     }
     private LoginLogic(Context context){
         this.context = context;

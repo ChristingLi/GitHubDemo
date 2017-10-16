@@ -22,7 +22,7 @@ greendao{
     /* schemaVersion---->指定数据库schema版本号，迁移等操作会用到 */
     schemaVersion 1
     /* daoPackage-------->通过gradle插件生成的数据库相关文件的包名，默认为你的entity所在的包名*/
-    daoPackage 'com.cn.DbFile'
+    daoPackage 'com.cn.dbFile'
     /*targetGenDir-------->
     这就是我们上面说到的自定义生成数据库文件的目录了，可以将生成的文件放到我们的java目录中，而不是build中，这样就不用额外的设置资源目录了*/
     targetGenDir 'src/main/java'
@@ -47,4 +47,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'org.greenrobot:greendao-generator:3.0.0'
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
 }
