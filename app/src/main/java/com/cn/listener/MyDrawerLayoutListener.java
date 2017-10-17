@@ -25,13 +25,16 @@ public class MyDrawerLayoutListener implements DrawerLayout.DrawerListener{
     public void onDrawerSlide(View drawerView, float slideOffset) {
         Logger.d("onDrawerSlide");
         if(mSlideSigm == 0){
-            if(mStatusSign == 1){
-                mImmersionBar.reset().statusBarColor(R.color.orange).init();
+        Logger.d("onDrawerSlide"+(slideOffset == 0));
+//            if(slideOffset == 0){
+                if(mStatusSign == 1){
+                    mImmersionBar.reset().statusBarColor(R.color.orange).init();
+                }
+                if(mStatusSign == 0){
+                    mImmersionBar.reset().statusBarColor(R.color.colorAccent).init();
+                }
             }
-            if(mStatusSign == 0){
-                mImmersionBar.reset().statusBarColor(R.color.colorAccent).init();
-            }
-        }
+//        }
      mSlideSigm += 1;
     }
 

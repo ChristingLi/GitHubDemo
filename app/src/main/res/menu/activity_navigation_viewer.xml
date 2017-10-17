@@ -31,5 +31,15 @@
             android:icon="@mipmap/all"
             android:title="Plan 2">
         </item>
+        <item
+            android:id="@+id/nav_7"
+            android:icon="@mipmap/all"
+            android:title="Alpha Tab">
+        </item>
+        <item
+            android:id="@+id/nav_8"
+            android:icon="@mipmap/credit_level"
+            android:title="Test Fragment">
+        </item>
     </group>
 </menu>

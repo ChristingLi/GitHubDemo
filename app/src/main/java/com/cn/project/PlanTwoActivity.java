@@ -74,6 +74,7 @@ public class PlanTwoActivity extends AppCompatActivity implements CustomTabView.
             case 3:
                 fragment = fragments[3];
                 break;
+                default:
         }
         if(fragment!=null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.home_container,fragment).commit();

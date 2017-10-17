@@ -1,5 +1,7 @@
 package com.cn.github;
 
+import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,15 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.cn.alphatab.AlphaActivity;
 import com.cn.bean.JsonEntity;
-import com.cn.dbFile.GreenDaoEntity;
-import com.cn.dbFile.GreenDaoEntityDao;
+import com.cn.dbfile.GreenDaoEntity;
+import com.cn.dbfile.GreenDaoEntityDao;
 import com.cn.horizontalScroll.SlidingActivity;
 import com.cn.listener.MyDrawerLayoutListener;
 import com.cn.project.HomeActivity;
@@ -28,7 +29,6 @@ import com.cn.project.PlanTwoActivity;
 import com.cn.train.FarstJsonTrain;
 import com.cn.utils.GreenDaoManager;
 import com.cn.utils.HttpUtils;
-import com.cn.utils.LogUtil;
 import com.cn.utils.ToastUtil;
 import com.cn.viewDarg.DragMenuActivity;
 import com.cn.viewDarg.DragViewHelperActivity;
@@ -36,22 +36,14 @@ import com.cn.viewDarg.HorizontalDragActivity;
 import com.cn.application.MyApplication;
 import com.cn.base.LoginLogic;
 import com.gyf.barlibrary.ImmersionBar;
-import com.gyf.barlibrary.OnKeyboardListener;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.DiskLogAdapter;
-import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -77,10 +69,17 @@ public class MainActivity extends AppCompatActivity implements
     Button mbtEntity;
     @BindViews({R.id.btn_list,R.id.btn_byte,R.id.btn_complex,R.id.btn_json,R.id.btn_green_insert,R.id.btn_green_read})
     List<Button> buttons;
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//        Transition explode = TransitionInflater.from(this).inflateTransition(R.transition.slide);
+//        getWindow().setExitTransition(explode);
+//        getWindow().setEnterTransition(explode);
+//        getWindow().setReenterTransition(explode);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -208,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements
         toogle.syncState();
     }
 
+    @SuppressLint("NewApi")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -233,6 +233,13 @@ public class MainActivity extends AppCompatActivity implements
             startActivity(mIntent);
         }else if(id == R.id.nav_6){
             Intent mIntent = new Intent(MainActivity.this, PlanTwoActivity.class);
+            startActivity(mIntent);
+        }
+        else if(id == R.id.nav_7){
+            Intent mIntent = new Intent(MainActivity.this, AlphaActivity.class);
+            startActivity(mIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        }else if(id == R.id.nav_8){
+            Intent mIntent = new Intent(MainActivity.this, TestFragmentActivity.class);
             startActivity(mIntent);
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

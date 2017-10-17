@@ -1,7 +1,7 @@
 package com.cn.utils;
 
 
-import com.cn.dbFile.GreenDaoEntityDao;
+import com.cn.dbfile.GreenDaoEntityDao;
 
 /**
  * Created by ld on 2017/10/13.

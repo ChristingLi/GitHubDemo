@@ -3,9 +3,9 @@ package com.cn.application;
 import android.app.Application;
 import android.content.Context;
 
-import com.cn.dbFile.DaoMaster;
-import com.cn.dbFile.DaoSession;
-import com.cn.dbFile.GreenDaoEntityDao;
+import com.cn.dbfile.DaoMaster;
+import com.cn.dbfile.DaoSession;
+import com.cn.dbfile.GreenDaoEntityDao;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;

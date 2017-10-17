@@ -1,4 +1,4 @@
-package com.cn.dbFile;
+package com.cn.dbfile;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

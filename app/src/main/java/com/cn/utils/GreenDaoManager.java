@@ -1,8 +1,8 @@
 package com.cn.utils;
 
 import com.cn.application.MyApplication;
-import com.cn.dbFile.DaoMaster;
-import com.cn.dbFile.DaoSession;
+import com.cn.dbfile.DaoMaster;
+import com.cn.dbfile.DaoSession;
 
 /**
  * Created by ld on 2017/10/13.

@@ -23,7 +23,7 @@ public class DataGenerator {
     public static final String []mTabTitle = new String[]{"首页","发现","关注","我的"};
 
     public static Fragment[] getFragments(String from){
-        Fragment fragments[] = new Fragment[4];
+        Fragment[] fragments = new Fragment[4];
         fragments[0] = HomeFragment.newInstance(from);
         fragments[1] = DiscoveryFragment.newInstance(from);
         fragments[2] = AttentionFragment.newInstance(from);
