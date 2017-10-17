@@ -47,6 +47,8 @@
         <activity android:name="com.cn.viewDarg.DragViewHelperActivity"></activity>
         <activity android:name="com.cn.viewDarg.HorizontalDragActivity"></activity>
         <activity android:name="com.cn.viewDarg.DragMenuActivity"></activity>
+        <activity android:name="com.cn.project.HomeActivity"></activity>
+        <activity android:name="com.cn.project.PlanTwoActivity"></activity>
     </application>
 
 </manifest>

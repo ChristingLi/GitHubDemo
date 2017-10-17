@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home_first_page"
+        android:icon="@mipmap/index"
+        android:title="首页">
+    </item>
+    <item
+        android:id="@+id/menu_home_found"
+        android:icon="@mipmap/map"
+        android:title="发现">
+    </item>
+    <!--
+     <item
+        android:id="@+id/menu_home_camera"
+        android:icon="@mipmap/index"
+        android:title="">
+    </item>
+     -->
+
+    <item
+        android:id="@+id/menu_home_message"
+        android:icon="@mipmap/message"
+        android:title="消息">
+    </item>
+    <item
+        android:id="@+id/menu_home_mine"
+        android:icon="@mipmap/personal"
+        android:title="我的">
+    </item>
+</menu>

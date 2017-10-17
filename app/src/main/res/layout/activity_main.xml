@@ -5,19 +5,19 @@
     android:id="@+id/drawlayout"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="false"
+    android:fitsSystemWindows="true"
     tools:openDrawer="start">
     <include
         layout="@layout/activity_include_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
     <android.support.design.widget.NavigationView
         android:id="@+id/design_navigation_view"
         app:menu="@menu/activity_navigation_viewer"
         android:layout_gravity="start"
         app:headerLayout="@layout/layout_navigation_view"
         android:layout_width="wrap_content"
-        android:fitsSystemWindows="false"
+        android:fitsSystemWindows="true"
         android:layout_height="match_parent">
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

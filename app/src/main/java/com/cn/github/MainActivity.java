@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,9 +22,13 @@ import com.cn.bean.JsonEntity;
 import com.cn.dbFile.GreenDaoEntity;
 import com.cn.dbFile.GreenDaoEntityDao;
 import com.cn.horizontalScroll.SlidingActivity;
+import com.cn.listener.MyDrawerLayoutListener;
+import com.cn.project.HomeActivity;
+import com.cn.project.PlanTwoActivity;
 import com.cn.train.FarstJsonTrain;
 import com.cn.utils.GreenDaoManager;
 import com.cn.utils.HttpUtils;
+import com.cn.utils.LogUtil;
 import com.cn.utils.ToastUtil;
 import com.cn.viewDarg.DragMenuActivity;
 import com.cn.viewDarg.DragViewHelperActivity;
@@ -55,7 +60,8 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Request;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "MainActivity";
     private TextView tvTest;
     private Button btnTest;
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String json = "{\"name\":\"chenggang\",\"age\":24}";
     String arrayAyy = "[[\'马云',50],null,[\'马化腾',30]]";
     private GreenDaoEntityDao dao;
+    private ImmersionBar mImmersionBar;
     /*butter knife*/
     @BindView(R.id.btn_entity)
     Button mbtEntity;
@@ -76,57 +83,57 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        dao = GreenDaoManager.getInstance().getGreedDaoSession().getGreenDaoEntityDao();
-        initViews();
-        initEvent();
-//        StatusBarCompat.compat(this,R.color.transparent);
-        ImmersionBar.with(this)
-                .transparentStatusBar()  //透明状态栏，不写默认透明色
-                .transparentNavigationBar()  //透明导航栏，不写默认黑色(设置此方法，fullScreen()方法自动为true)
-                .transparentBar()             //透明状态栏和导航栏，不写默认状态栏为透明色，导航栏为黑色（设置此方法，fullScreen()方法自动为true）
-                .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
-                .navigationBarColor(R.color.colorPrimary) //导航栏颜色，不写默认黑色
-                .barColor(R.color.colorPrimary)  //同时自定义状态栏和导航栏颜色，不写默认状态栏为透明色，导航栏为黑色
-                .statusBarAlpha(0.3f)  //状态栏透明度，不写默认0.0f
-                .navigationBarAlpha(0.4f)  //导航栏透明度，不写默认0.0F
+
+        mImmersionBar = ImmersionBar.with(this);
+                mImmersionBar.transparentStatusBar()  //透明状态栏，不写默认透明色
+//                .transparentNavigationBar()  //透明导航栏，不写默认黑色(设置此方法，fullScreen()方法自动为true)
+//                .transparentBar()             //透明状态栏和导航栏，不写默认状态栏为透明色，导航栏为黑色（设置此方法，fullScreen()方法自动为true）
+                 .statusBarColor(R.color.orange)     //状态栏颜色，不写默认透明色
+//               .navigationBarColor(R.color.orange) //导航栏颜色，不写默认黑色
+//              .barColor(R.color.orange)  //同时自定义状态栏和导航栏颜色，不写默认状态栏为透明色，导航栏为黑色
+                .statusBarAlpha(0.0f)  //状态栏透明度，不写默认0.0f
+//                .navigationBarAlpha(0.4f)  //导航栏透明度，不写默认0.0F
 //                .barAlpha(0.3f)  //状态栏和导航栏透明度，不写默认0.0f
                 .statusBarDarkFont(true)   //状态栏字体是深色，不写默认为亮色
 //                .flymeOSStatusBarFontColor(R.color.btn3)  //修改flyme OS状态栏字体颜色
 //                .fullScreen(true)      //有导航栏的情况下，activity全屏显示，也就是activity最下面被导航栏覆盖，不写默认非全屏
 //                .hideBar(BarHide.FLAG_HIDE_BAR)  //隐藏状态栏或导航栏或两者，不写默认不隐藏
-                .addViewSupportTransformColor(mToolbar)  //设置支持view变色，可以添加多个view，不指定颜色，默认和状态栏同色，还有两个重载方法
+//                .addViewSupportTransformColor(mToolbar)  //设置支持view变色，可以添加多个view，不指定颜色，默认和状态栏同色，还有两个重载方法
 //                .titleBar(view)    //解决状态栏和布局重叠问题，任选其一
-                .titleBarMarginTop(mDrawerLayout)     //解决状态栏和布局重叠问题，任选其一
+//                .titleBarMarginTop(mDrawerLayout)     //解决状态栏和布局重叠问题，任选其一
 //                .statusBarView(view)  //解决状态栏和布局重叠问题，任选其一
-                .fitsSystemWindows(false)    //解决状态栏和布局重叠问题，任选其一，默认为false，当为true时一定要指定statusBarColor()，不然状态栏为透明色，还有一些重载方法
-                .supportActionBar(true) //支持ActionBar使用
-                .statusBarColorTransform(R.color.orange)  //状态栏变色后的颜色
-                .navigationBarColorTransform(R.color.orange) //导航栏变色后的颜色
-                .barColorTransform(R.color.orange)  //状态栏和导航栏变色后的颜色
-//                .removeSupportView(toolbar)  //移除指定view支持
-                .removeSupportAllView() //移除全部view支持
+                .fitsSystemWindows(true)    //解决状态栏和布局重叠问题，任选其一，默认为false，当为true时一定要指定statusBarColor()，不然状态栏为透明色，还有一些重载方法
+//                .supportActionBar(true) //支持ActionBar使用
+//                .statusBarColorTransform(R.color.orange)  //状态栏变色后的颜色
+//                .navigationBarColorTransform(R.color.orange) //导航栏变色后的颜色
+//                .barColorTransform(R.color.orange)  //状态栏和导航栏变色后的颜色
+//                .removeSupportView(mToolbar)  //移除指定view支持
+//                .removeSupportAllView() //移除全部view支持
                 .navigationBarEnable(true)   //是否可以修改导航栏颜色，默认为true
-                .navigationBarWithKitkatEnable(true)  //是否可以修改安卓4.4和emui3.1手机导航栏颜色，默认为true
-                .fixMarginAtBottom(true)   //已过时，当xml里使用android:fitsSystemWindows="true"属性时,解决4.4和emui3.1手机底部有时会出现多余空白的问题，默认为false，非必须
+//                .navigationBarWithKitkatEnable(true)  //是否可以修改安卓4.4和emui3.1手机导航栏颜色，默认为true
+//                .fixMarginAtBottom(true)   //已过时，当xml里使用android:fitsSystemWindows="true"属性时,解决4.4和emui3.1手机底部有时会出现多余空白的问题，默认为false，非必须
 //                .addTag("tag")  //给以上设置的参数打标记
 //                .getTag("tag")  //根据tag获得沉浸式参数
-                .reset()  //重置所以沉浸式参数
-                .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
-                .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)  //单独指定软键盘模式
-                .setOnKeyboardListener(new OnKeyboardListener() {    //软键盘监听回调
-                    @Override
-                    public void onKeyboardChange(boolean isPopup, int keyboardHeight) {
-                        Logger.d(isPopup);  //isPopup为true，软键盘弹出，为false，软键盘关闭
-                    }
-                })
+//                .reset()  //重置所以沉浸式参数
+//                .keyboardEnable(true)  //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
+//                .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)  //单独指定软键盘模式
+//                .setOnKeyboardListener(new OnKeyboardListener() {    //软键盘监听回调
+//                    @Override
+//                    public void onKeyboardChange(boolean isPopup, int keyboardHeight) {
+//                        Logger.d(isPopup);  //isPopup为true，软键盘弹出，为false，软键盘关闭
+//                    }
+//                })
                 .init();  //必须调用方可沉浸式
+        initViews();
+        initEvent();
+        dao = GreenDaoManager.getInstance().getGreedDaoSession().getGreenDaoEntityDao();
+
+//        StatusBarCompat.compat(this,R.color.transparent);
+
     }
     @OnClick(R.id.btn_green_insert)
     public void greedDaoInsert(){
-
         GreenDaoEntity entity = new GreenDaoEntity(null,"GreenDao");
-//        entity.setId(null);null
-//        entity.setName("GreenDao");
         dao.insert(entity);
     }
     @OnClick(R.id.btn_green_read)
@@ -161,57 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         JsonEntity entity = JSON.parseObject(json,JsonEntity.class);
         Logger.d("姓名是："+entity.getName()+",年龄是："+entity.getAge());
     }
-    private void logger() {
-        Logger.addLogAdapter(new AndroidLogAdapter());
-        Logger.d(TAG);
-        Logger.clearLogAdapters();
-        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(true)
-                .methodCount(0)
-                .methodOffset(3)
-                .tag("tag")
-                .build();
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
-        Logger.addLogAdapter(new AndroidLogAdapter(){
-            @Override
-            public boolean isLoggable(int priority, String tag) {
-                return BuildConfig.DEBUG;
-            }
-        });
-        Logger.addLogAdapter(new DiskLogAdapter());
-        Logger.w("no thread info and only 1 method");
 
-        Logger.clearLogAdapters();
-        formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)
-                .methodCount(0)
-                .build();
-
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
-        Logger.i("no thread info and method info");
-
-        Logger.t("tag").e("Custom tag for only one use");
-
-        Logger.json("{ \"key\": 3, \"value\": something}");
-
-        Logger.d(Arrays.asList("foo", "bar"));
-
-        Map<String, String> map = new HashMap<>();
-        map.put("key", "value");
-        map.put("key1", "value2");
-
-        Logger.d(map);
-
-        Logger.clearLogAdapters();
-        formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)
-                .methodCount(0)
-                .tag("MyTag")
-                .build();
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
-
-        Logger.w("my log message with my tag");
-    }
 
     private void initEvent(){
         btnTest.setOnClickListener(new View.OnClickListener() {
@@ -234,22 +191,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void initViews(){
         mDrawerLayout = findViewById(R.id.drawlayout);
+        mDrawerLayout.addDrawerListener(new MyDrawerLayoutListener(mImmersionBar));
         mToolbar = findViewById(R.id.toolbar);
         tvTest = findViewById(R.id.test_text);
         btnTest = findViewById(R.id.test_btn);
         mNavigationView = findViewById(R.id.design_navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
         mbtEntity = findViewById(R.id.btn_entity);
         initToolbar();
     }
-
     private void initToolbar() {
         setSupportActionBar(mToolbar);
         setTitle("");
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toogle);
         toogle.syncState();
-
-        mNavigationView.setNavigationItemSelectedListener(MainActivity.this);
     }
 
     @Override
@@ -270,6 +226,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if(id == R.id.nav_4){
             ToastUtil.showShortToastCenter("Praise");
             Intent mIntent = new Intent(MainActivity.this, DragViewHelperActivity.class);
+            startActivity(mIntent);
+        }else if(id == R.id.nav_5){
+            ToastUtil.showShortToast("即将进入简书");
+            Intent mIntent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(mIntent);
+        }else if(id == R.id.nav_6){
+            Intent mIntent = new Intent(MainActivity.this, PlanTwoActivity.class);
             startActivity(mIntent);
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

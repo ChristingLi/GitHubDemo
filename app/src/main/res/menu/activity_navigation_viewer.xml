@@ -21,5 +21,15 @@
             android:icon="@drawable/ic_praise"
             android:title="Praize">
         </item>
+        <item
+            android:id="@+id/nav_5"
+            android:icon="@mipmap/credit_level"
+            android:title="仿制">
+        </item>
+        <item
+            android:id="@+id/nav_6"
+            android:icon="@mipmap/all"
+            android:title="Plan 2">
+        </item>
     </group>
 </menu>
