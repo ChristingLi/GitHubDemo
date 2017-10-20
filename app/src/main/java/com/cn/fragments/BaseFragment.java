@@ -1,7 +1,6 @@
 package com.cn.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,92 +8,124 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cn.github.R;
+import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by ld on 2017/10/17.
+ *
+ * @author ld
  */
 
-public class BaseFragment extends Fragment {
-    private OnFragmentInteractionListener mListener;
-    private Unbinder unbinder;
+public abstract class BaseFragment extends Fragment {
 
-    public BaseFragment() {
-        // Required empty public constructor
-    }
+    public Context mContext;
+    protected View mRootView;
+    protected LoadService mBaseLoadService;
+    /**
+     * 是否为可见状态
+     */
+    private boolean isVisible;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * 是否视图加载完成(第一次加载)
+     */
+    private boolean isPrepared;
+
+    /**
+     * Fragment生命周期中，在执行完onAttach之后就可以获取到上下文了
      *
-     * @return A new instance of fragment BaseFragment.
+     * @param savedInstanceState
      */
-    // TODO: Rename and change types and number of parameters
-    public static BaseFragment newInstance() {
-        BaseFragment fragment = new BaseFragment();
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+
+        mContext = getActivity();
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        mRootView = inflater.inflate(setLayoutId(), container, false);
+        initView();
+        mBaseLoadService = LoadSir.getDefault().register(mRootView, new Callback.OnReloadListener() {
+            @Override
+            public void onReload(View v) {
+
+                onNetReload(v);
+
+            }
+        });
+        return mBaseLoadService.getLoadLayout();
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isPrepared = true;
+        lazyLoad();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        unbinder = ButterKnife.bind(this, view);
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_base, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //如果可见
+        if (getUserVisibleHint()) {
+            isVisible = true;
+            onVisible();
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            isVisible = false;
+            onInvisible();
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * 可见做懒加载
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private void onVisible() {
+        lazyLoad();
     }
+
+    private void lazyLoad() {
+        if (!isVisible || !isPrepared) {
+            return;
+        }
+        initData();
+        isPrepared = false;
+    }
+
+    /**
+     * 不可见时做一些销毁操作
+     */
+    protected void onInvisible() {
+    }
+
+    /**
+     * 初始化控件
+     */
+    public abstract void initView();
+
+    /**
+     * 绑定布局
+     */
+    protected abstract int setLayoutId();
+
+    /**
+     * 初始化数据
+     */
+    protected abstract void initData();
+
+    /**
+     * 重新加载
+     *
+     * @param v
+     */
+    protected abstract void onNetReload(View v);
 }
 

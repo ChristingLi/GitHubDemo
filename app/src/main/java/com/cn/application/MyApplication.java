@@ -3,9 +3,15 @@ package com.cn.application;
 import android.app.Application;
 import android.content.Context;
 
+import com.cn.callback.CoustomCallback;
+import com.cn.callback.EmptyCallback;
+import com.cn.callback.ErrorCallback;
+import com.cn.callback.LoadingCallback;
+import com.cn.callback.TimeoutCallback;
 import com.cn.dbfile.DaoMaster;
 import com.cn.dbfile.DaoSession;
 import com.cn.dbfile.GreenDaoEntityDao;
+import com.kingja.loadsir.core.LoadSir;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -26,10 +32,11 @@ import okhttp3.OkHttpClient;
 /**
  * Created by ld on 2017/10/9.
  * 自定义Application
+ * @author ld
  */
 
 public class MyApplication extends Application{
-    /*全局上下文*/
+    /**全局上下文*/
     private static Context mContext;
     @Override
     public void onCreate() {
@@ -38,16 +45,28 @@ public class MyApplication extends Application{
         /*配置okhttp*/
         initOkhttp();
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(true)
+                .showThreadInfo(false)
                 .methodCount(0)
                 .methodOffset(3)
                 .tag("tag")
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
-//        InitGreenDao();
-
+        loadSir();
     }
 
+    /**
+     * 初始化sir配置
+     */
+    private void loadSir(){
+        LoadSir.beginBuilder()
+                .addCallback(new ErrorCallback())
+                .addCallback(new EmptyCallback())
+                .addCallback(new LoadingCallback())
+                .addCallback(new TimeoutCallback())
+                .addCallback(new CoustomCallback())
+                .setDefaultCallback(LoadingCallback.class)
+                .commit();
+    }
     private void initGreenDao() {
     /*初始化数据库
     * */
@@ -57,7 +76,7 @@ public class MyApplication extends Application{
         GreenDaoEntityDao greenDaoEntityDao = daoSession.getGreenDaoEntityDao();
     }
 
-    /* 获取系统上下文 */
+    /** 获取系统上下文 */
     public static Context getAppContext(){
         return mContext;
     }

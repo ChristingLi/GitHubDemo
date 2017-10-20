@@ -102,5 +102,7 @@
             android:textAllCaps="false"
             android:text="GreenDao读取数据"/>
     </LinearLayout>
-
+    <com.cn.keyboard
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

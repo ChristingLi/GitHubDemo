@@ -4,11 +4,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cn.callback.ErrorCallback;
+import com.cn.callback.LoadingCallback;
 import com.cn.github.R;
+import com.cn.utils.PostUtil;
+import com.cn.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -16,80 +21,47 @@ import com.orhanobut.logger.Logger;
  * @author ld
  */
 
-public class MapFragment extends Fragment {
+public class MapFragment extends BaseFragment {
     private static final String TAG = "MapFragment";
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.fragment_map;
+    }
+
+    @Override
+    protected void initData() {
+        PostUtil.postCallbackDelayed(mBaseLoadService, ErrorCallback.class);
+        Logger.e("TAG", "Map加载数据了");
+    }
+
+    @Override
+    protected void onNetReload(View v) {
+        ToastUtil.showShortToast("reload in MapFragment");
+        mBaseLoadService.showCallback(LoadingCallback.class);
+        PostUtil.postSuccessDelayed(mBaseLoadService);
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Logger.w(TAG+"onAttach");
+        Logger.d(TAG+"onAttach");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Logger.d(TAG+"onCreate");
         super.onCreate(savedInstanceState);
-        Logger.w(TAG+"onCreate");
-    }
-    @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map,container,false);
-    }
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Logger.w(TAG+"onViewCreated");
-        super.onViewCreated(view, savedInstanceState);
     }
 
+    @Nullable
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Logger.w(TAG+"onActivityCreated");
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        Logger.w(TAG+"onStart");
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        Logger.w(TAG+"onResume");
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        Logger.w(TAG+"onPause");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        Logger.w(TAG+"onStop");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        Logger.w(TAG+"onDestroyView");
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        Logger.w(TAG+"onDestroy");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        Logger.w(TAG+"onDetach");
-        super.onDetach();
-    }
-
-    @Override
-    public void onAttachFragment(Fragment childFragment) {
-        Logger.w(TAG+"onAttachFragment");
-        super.onAttachFragment(childFragment);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Logger.d(TAG+"onCreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 }

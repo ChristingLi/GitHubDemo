@@ -1,4 +1,4 @@
-package com.cn.dbFile;
+package com.cn.dbfile;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
