@@ -1,4 +1,4 @@
-package com.cn.viewDarg;
+package com.cn.viewdarg;
 
 import android.content.Context;
 import android.support.v4.widget.ViewDragHelper;

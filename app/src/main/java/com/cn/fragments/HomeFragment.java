@@ -1,14 +1,6 @@
 package com.cn.fragments;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.cn.callback.ErrorCallback;
 import com.cn.callback.LoadingCallback;
@@ -39,6 +31,7 @@ public class HomeFragment extends BaseFragment{
     @Override
     protected void initData() {
         PostUtil.postCallbackDelayed(mBaseLoadService, ErrorCallback.class);
+        Logger.d(TAG+"is initData ing");
     }
 
     @Override
@@ -46,24 +39,6 @@ public class HomeFragment extends BaseFragment{
         ToastUtil.showShortToast("reload in HomeFragment");
         mBaseLoadService.showCallback(LoadingCallback.class);
         PostUtil.postSuccessDelayed(mBaseLoadService);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Logger.d(TAG+"onAttach");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        Logger.d(TAG+"onCreate");
-        super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Logger.d(TAG+"onCreateView");
-        return super.onCreateView(inflater, container, savedInstanceState);
+        Logger.d(TAG+"is onNetReload ing");
     }
 }

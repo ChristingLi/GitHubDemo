@@ -1,4 +1,4 @@
-package com.cn;
+package com.cn.customview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.cn.github.R;
+import com.orhanobut.logger.Logger;
+
+import java.util.Map;
 
 /**
  * Created by ld on 2017/10/19.
@@ -19,7 +22,7 @@ import com.cn.github.R;
  * @date 2017/10/19
  */
 
-public class keyboard extends View {
+public class Keyboard extends View {
     private Paint mPaint;
     private Bitmap mBpDelete;
     private float clickX, clickY;   //点击时的x,y坐标
@@ -41,15 +44,15 @@ public class keyboard extends View {
      */
     private int type = -1;
 
-    public keyboard(Context context) {
+    public Keyboard(Context context) {
         super(context);
     }
 
-    public keyboard(Context context, AttributeSet attrs) {
+    public Keyboard(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public keyboard(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Keyboard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -112,6 +115,8 @@ public class keyboard extends View {
         }
     }
 
+
+
     private void initData() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mWidth = getWidth();
@@ -121,16 +126,22 @@ public class keyboard extends View {
         mHeightOfBp = mBpDelete.getHeight();
 
         mRectWidth = (mWidth - 40) / 3;   //每个按键左右间距10
-        mRectHeight = (mHeight - 100) / 8;//每个按键上下间距10
+        mRectHeight = (mHeight ) / 4;//每个按键上下间距10
+        Logger.d(mRectWidth+"--"+mRectHeight);
 
         xs[0] = mRectWidth / 2;
         xs[1] = (mRectWidth * 3) / 2 + 10;
         xs[2] = (mRectWidth * 5) / 2 + 20;
 
-        ys[0] = mRectHeight / 2 + 25 + mHeight / 2;
-        ys[1] = (mRectHeight * 3) / 2 + 35 + mHeight / 2;
-        ys[2] = (mRectHeight * 5) / 2 + 45 + mHeight / 2;
-        ys[3] = (mRectHeight * 7) / 2 + 55 + mHeight / 2;
+//        ys[0] = mRectHeight / 2 + 25 + mHeight / 2;
+//        ys[1] = (mRectHeight * 3) / 2 + 35 + mHeight / 2;
+//        ys[2] = (mRectHeight * 5) / 2 + 45 + mHeight / 2;
+//        ys[3] = (mRectHeight * 7) / 2 + 55 + mHeight / 2;
+
+        ys[0] = mRectHeight / 2 + 25 ;
+        ys[1] = (mRectHeight * 3) / 2 + 35 ;
+        ys[2] = (mRectHeight * 5) / 2 + 45 ;
+        ys[3] = (mRectHeight * 7) / 2 + 55 ;
 
         isInit = true;
     }
@@ -139,24 +150,36 @@ public class keyboard extends View {
         mPaint.setColor(Color.WHITE);
         //画宫格
         //第一排
-        canvas.drawRoundRect(10, mHeight / 2 + 10, 10 + mRectWidth, mHeight / 2 + 10 + mRectHeight, 10, 10, mPaint);
-        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 10, 20 + 2 * mRectWidth, mHeight / 2 + 10 + mRectHeight, 10, 10, mPaint);
-        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 10, 30 + 3 * mRectWidth, mHeight / 2 + 10 + mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(10, mHeight / 2 + 10, 10 + mRectWidth, mHeight / 2 + 10 + mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(10,10,10+mRectWidth,10+mRectHeight,10,10, mPaint);
+//        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 10, 20 + 2 * mRectWidth, mHeight / 2 + 10 + mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(20+mRectWidth,10,20+2*mRectWidth,10 +mRectHeight,10,10,mPaint);
+//        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 10, 30 + 3 * mRectWidth, mHeight / 2 + 10 + mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(30+2*mRectWidth,10,30+3*mRectWidth,10+mRectHeight,10,10,mPaint);
         //第二排
-        canvas.drawRoundRect(10, mHeight / 2 + 20 + mRectHeight, 10 + mRectWidth, mHeight / 2 + 20 + 2 * mRectHeight, 10, 10, mPaint);
-        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 20 + mRectHeight, 20 + 2 * mRectWidth, mHeight / 2 + 20 + 2 * mRectHeight, 10, 10, mPaint);
-        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 20 + mRectHeight, 30 + 3 * mRectWidth, mHeight / 2 + 20 + 2 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(10, mHeight / 2 + 20 + mRectHeight, 10 + mRectWidth, mHeight / 2 + 20 + 2 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(10,  20 + mRectHeight, 10 + mRectWidth,  20 + 2 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 20 + mRectHeight, 20 + 2 * mRectWidth, mHeight / 2 + 20 + 2 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(20 + mRectWidth,  20 + mRectHeight, 20 + 2 * mRectWidth, 20 + 2 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 20 + mRectHeight, 30 + 3 * mRectWidth, mHeight / 2 + 20 + 2 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(30 + 2 * mRectWidth,  20 + mRectHeight, 30 + 3 * mRectWidth,  20 + 2 * mRectHeight, 10, 10, mPaint);
         //第三排
-        canvas.drawRoundRect(10, mHeight / 2 + 30 + 2 * mRectHeight, 10 + mRectWidth, mHeight / 2 + 30 + 3 * mRectHeight, 10, 10, mPaint);
-        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 30 + 2 * mRectHeight, 20 + 2 * mRectWidth, mHeight / 2 + 30 + 3 * mRectHeight, 10, 10, mPaint);
-        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 30 + 2 * mRectHeight, 30 + 3 * mRectWidth, mHeight / 2 + 30 + 3 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(10, mHeight / 2 + 30 + 2 * mRectHeight, 10 + mRectWidth, mHeight / 2 + 30 + 3 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(10,  30 + 2 * mRectHeight, 10 + mRectWidth, 30 + 3 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 30 + 2 * mRectHeight, 20 + 2 * mRectWidth, mHeight / 2 + 30 + 3 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(20 + mRectWidth,  30 + 2 * mRectHeight, 20 + 2 * mRectWidth, 30 + 3 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 30 + 2 * mRectHeight, 30 + 3 * mRectWidth, mHeight / 2 + 30 + 3 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(30 + 2 * mRectWidth,  30 + 2 * mRectHeight, 30 + 3 * mRectWidth, 30 + 3 * mRectHeight, 10, 10, mPaint);
         //第四排
         mPaint.setColor(Color.GRAY);
-        canvas.drawRoundRect(10, mHeight / 2 + 40 + 3 * mRectHeight, 10 + mRectWidth, mHeight / 2 + 40 + 4 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(10, mHeight / 2 + 40 + 3 * mRectHeight, 10 + mRectWidth, mHeight / 2 + 40 + 4 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(10,  40 + 3 * mRectHeight, 10 + mRectWidth,  40 + 4 * mRectHeight, 10, 10, mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 40 + 3 * mRectHeight, 20 + 2 * mRectWidth, mHeight / 2 + 40 + 4 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(20 + mRectWidth, mHeight / 2 + 40 + 3 * mRectHeight, 20 + 2 * mRectWidth, mHeight / 2 + 40 + 4 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(20 + mRectWidth, 40 + 3 * mRectHeight, 20 + 2 * mRectWidth,  40 + 4 * mRectHeight, 10, 10, mPaint);
         mPaint.setColor(Color.GRAY);
-        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 40 + 3 * mRectHeight, 30 + 3 * mRectWidth, mHeight / 2 + 40 + 4 * mRectHeight, 10, 10, mPaint);
+//        canvas.drawRoundRect(30 + 2 * mRectWidth, mHeight / 2 + 40 + 3 * mRectHeight, 30 + 3 * mRectWidth, mHeight / 2 + 40 + 4 * mRectHeight, 10, 10, mPaint);
+        canvas.drawRoundRect(30 + 2 * mRectWidth, 40 + 3 * mRectHeight, 30 + 3 * mRectWidth,  40 + 4 * mRectHeight, 10, 10, mPaint);
 
 
         mPaint.setColor(Color.BLACK);
@@ -222,99 +245,104 @@ public class keyboard extends View {
     }
 
     private void handleDown(float x, float y) {
-        if (y < mHeight / 2) {
-            return;
-        }
+//        if (y  mHeight / 2) {
+//            return;
+//        }
         if (x >= 10 && x <= 10 + mRectWidth) {   //第一列
             clickX = xs[0];
-            if (y >= mHeight / 2 + 10 && y <= mHeight / 2 + 10 + mRectHeight) {  //第一排(1)
+//            if (y >= mHeight / 2 + 10 && y <= mHeight / 2 + 10 + mRectHeight) {  //第一排(1)
+                if (y >=  10 && y <= 10 + mRectHeight) {  //第一排(1)
                 clickY = ys[0];
                 x1 = 10;
-                y1 = mHeight / 2 + 10;
+//                y1 = mHeight / 2 + 10;
+                y1 =  10;
                 x2 = 10 + mRectWidth;
-                y2 = mHeight / 2 + 10 + mRectHeight;
+//                y2 = mHeight / 2 + 10 + mRectHeight;
+                y2 =  10 + mRectHeight;
                 number = "1";
-            } else if (y >= mHeight / 2 + 20 + mRectHeight && y <= mHeight / 2 + 20 + 2 * mRectHeight) {  //第二排(4)
+            }
+//            else if (y >= mHeight / 2 + 20 + mRectHeight && y <= mHeight / 2 + 20 + 2 * mRectHeight) {  //第二排(4)
+                    else if (y >=  20 + mRectHeight && y <=  20 + 2 * mRectHeight) {  //第二排(4)
                 x1 = 10;
-                y1 = mHeight / 2 + 20 + mRectHeight;
+                y1 =  20 + mRectHeight;
                 x2 = 10 + mRectWidth;
-                y2 = mHeight / 2 + 20 + 2 * mRectHeight;
+                y2 =  20 + 2 * mRectHeight;
                 clickY = ys[1];
                 number = "4";
-            } else if (y >= mHeight / 2 + 30 + 2 * mRectHeight && y <= mHeight / 2 + 30 + 3 * mRectHeight) {  //第三排(7)
+            } else if (y >=  30 + 2 * mRectHeight && y <=  30 + 3 * mRectHeight) {  //第三排(7)
                 x1 = 10;
-                y1 = mHeight / 2 + 30 + 2 * mRectHeight;
+                y1 =  30 + 2 * mRectHeight;
                 x2 = 10 + mRectWidth;
-                y2 = mHeight / 2 + 30 + 3 * mRectHeight;
+                y2 =  30 + 3 * mRectHeight;
                 clickY = ys[2];
                 number = "7";
-            } else if (y >= mHeight / 2 + 40 + 3 * mRectHeight && y <= mHeight / 2 + 40 + 4 * mRectHeight) { //第四排(0)
+            } else if (y >=  40 + 3 * mRectHeight && y <=  40 + 4 * mRectHeight) { //第四排(0)
                 x1 = 10;
-                y1 = mHeight / 2 + 40 + 3 * mRectHeight;
+                y1 = 40 + 3 * mRectHeight;
                 x2 = 10 + mRectWidth;
-                y2 = mHeight / 2 + 40 + 4 * mRectHeight;
+                y2 =  40 + 4 * mRectHeight;
                 clickY = ys[3];
                 number = ".";
             }
         } else if (x >= 20 + mRectWidth && x <= 20 + 2 * mRectWidth) {  //第二列
             clickX = xs[1];
-            if (y >= mHeight / 2 + 10 && y <= mHeight / 2 + 10 + mRectHeight) {  //第一排(2)
+            if (y >=  10 && y <=  10 + mRectHeight) {  //第一排(2)
                 x1 = 20 + mRectWidth;
-                y1 = mHeight / 2 + 10;
+                y1 = 10;
                 x2 = 20 + 2 * mRectWidth;
-                y2 = mHeight / 2 + 10 + mRectHeight;
+                y2 =  10 + mRectHeight;
                 clickY = ys[0];
                 number = "2";
-            } else if (y >= mHeight / 2 + 20 + mRectHeight && y <= mHeight / 2 + 20 + 2 * mRectHeight) {  //第二排(5)
+            } else if (y >=  20 + mRectHeight && y <=  20 + 2 * mRectHeight) {  //第二排(5)
                 x1 = 20 + mRectWidth;
-                y1 = mHeight / 2 + 20 + mRectHeight;
+                y1 =  20 + mRectHeight;
                 x2 = 20 + 2 * mRectWidth;
-                y2 = mHeight / 2 + 20 + 2 * mRectHeight;
+                y2 =  20 + 2 * mRectHeight;
                 clickY = ys[1];
                 number = "5";
-            } else if (y >= mHeight / 2 + 30 + 2 * mRectHeight && y <= mHeight / 2 + 30 + 3 * mRectHeight) {  //第三排(8)
+            } else if (y >=  30 + 2 * mRectHeight && y <=  30 + 3 * mRectHeight) {  //第三排(8)
                 x1 = 20 + mRectWidth;
-                y1 = mHeight / 2 + 30 + 2 * mRectHeight;
+                y1 =  30 + 2 * mRectHeight;
                 x2 = 20 + 2 * mRectWidth;
-                y2 = mHeight / 2 + 30 + 3 * mRectHeight;
+                y2 =  30 + 3 * mRectHeight;
                 clickY = ys[2];
                 number = "8";
-            } else if (y >= mHeight / 2 + 40 + 3 * mRectHeight && y <= mHeight / 2 + 40 + 4 * mRectHeight) { //第四排(0)
+            } else if (y >=  + 40 + 3 * mRectHeight && y <= 40 + 4 * mRectHeight) { //第四排(0)
                 x1 = 20 + mRectWidth;
-                y1 = mHeight / 2 + 40 + 3 * mRectHeight;
+                y1 =  40 + 3 * mRectHeight;
                 x2 = 20 + 2 * mRectWidth;
-                y2 = mHeight / 2 + 40 + 4 * mRectHeight;
+                y2 =  40 + 4 * mRectHeight;
                 clickY = ys[3];
                 number = "0";
             }
         } else if (x >= 30 + 2 * mRectWidth && x <= 30 + 3 * mRectWidth) {   //第三列
             clickX = xs[2];
-            if (y >= mHeight / 2 + 10 && y <= mHeight / 2 + 10 + mRectHeight) {  //第一排(3)
+            if (y >=  10 && y <=  10 + mRectHeight) {  //第一排(3)
                 x1 = 30 + 2 * mRectWidth;
-                y1 = mHeight / 2 + 10;
+                y1 =  10;
                 x2 = 30 + 3 * mRectWidth;
-                y2 = mHeight / 2 + 10 + mRectHeight;
+                y2 =  10 + mRectHeight;
                 clickY = ys[0];
                 number = "3";
-            } else if (y >= mHeight / 2 + 20 + mRectHeight && y <= mHeight / 2 + 20 + 2 * mRectHeight) {  //第二排(6)
+            } else if (y >=  20 + mRectHeight && y <=  20 + 2 * mRectHeight) {  //第二排(6)
                 x1 = 30 + 2 * mRectWidth;
-                y1 = mHeight / 2 + 20 + mRectHeight;
+                y1 =  + 20 + mRectHeight;
                 x2 = 30 + 3 * mRectWidth;
-                y2 = mHeight / 2 + 20 + 2 * mRectHeight;
+                y2 =  20 + 2 * mRectHeight;
                 clickY = ys[1];
                 number = "6";
-            } else if (y >= mHeight / 2 + 30 + 2 * mRectHeight && y <= mHeight / 2 + 30 + 3 * mRectHeight) {  //第三排(9)
+            } else if (y >=  30 + 2 * mRectHeight && y <=  30 + 3 * mRectHeight) {  //第三排(9)
                 x1 = 30 + 2 * mRectWidth;
-                y1 = mHeight / 2 + 30 + 2 * mRectHeight;
+                y1 =  30 + 2 * mRectHeight;
                 x2 = 30 + 3 * mRectWidth;
-                y2 = mHeight / 2 + 30 + 3 * mRectHeight;
+                y2 =  30 + 3 * mRectHeight;
                 clickY = ys[2];
                 number = "9";
-            } else if (y >= mHeight / 2 + 40 + 3 * mRectHeight && y <= mHeight / 2 + 40 + 4 * mRectHeight) { //第四排(删除键)
+            } else if (y >= 40 + 3 * mRectHeight && y <=  40 + 4 * mRectHeight) { //第四排(删除键)
                 x1 = 30 + 2 * mRectWidth;
-                y1 = mHeight / 2 + 40 + 3 * mRectHeight;
+                y1 =  40 + 3 * mRectHeight;
                 x2 = 30 + 3 * mRectWidth;
-                y2 = mHeight / 2 + 40 + 4 * mRectHeight;
+                y2 =  40 + 4 * mRectHeight;
                 clickY = ys[3];
                 number = "delete";
             }

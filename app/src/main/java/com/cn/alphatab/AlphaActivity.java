@@ -41,12 +41,9 @@ public class AlphaActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_alpha_tab);
-//        getWindow().setEnterTransition(new Slide().setDuration(1000));
         ButterKnife.bind(this);
         Transition explode = TransitionInflater.from(this).inflateTransition(R.transition.explose);
         getWindow().setEnterTransition(explode);
-//        getWindow().setExitTransition(explode);
-//        getWindow().setReenterTransition(explode);
 
         MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
         mainAdapter.setFragments(new HomeFragment());

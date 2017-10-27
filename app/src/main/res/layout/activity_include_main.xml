@@ -32,12 +32,26 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Btn"
-        android:id="@+id/test_btn"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Btn"
+            android:id="@+id/test_btn"/>
+        <com.cn.customview.SwitchButton
+            android:id="@+id/switch_button"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+             />
+        <com.cn.customview.SwitchButtons
+            android:id="@+id/switch_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -102,7 +116,25 @@
             android:textAllCaps="false"
             android:text="GreenDao读取数据"/>
     </LinearLayout>
-    <com.cn.keyboard
+    <!--
+    <com.cn.customview.Keyboard
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="250dp"
+        android:id="@+id/key_board"/>
+    -->
+    <EditText
+        android:hint="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_watch_1"/>
+    <EditText
+        android:hint="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_watch_2"/>
+    <TextView
+        android:id="@+id/tv_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="123123"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.cn.viewDarg;
+package com.cn.viewdarg;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

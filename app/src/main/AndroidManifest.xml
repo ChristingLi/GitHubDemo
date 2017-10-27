@@ -44,9 +44,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.cn.horizontalScroll.SlidingActivity"></activity>
-        <activity android:name="com.cn.viewDarg.DragViewHelperActivity"></activity>
-        <activity android:name="com.cn.viewDarg.HorizontalDragActivity"></activity>
-        <activity android:name="com.cn.viewDarg.DragMenuActivity"></activity>
+        <activity android:name="com.cn.viewdarg.DragViewHelperActivity"></activity>
+        <activity android:name="com.cn.viewdarg.HorizontalDragActivity"></activity>
+        <activity android:name="com.cn.viewdarg.DragMenuActivity"></activity>
         <activity android:name="com.cn.project.HomeActivity"></activity>
         <activity android:name="com.cn.project.PlanTwoActivity"></activity>
         <activity android:name="com.cn.alphatab.AlphaActivity"></activity>

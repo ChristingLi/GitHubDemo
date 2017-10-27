@@ -1,4 +1,4 @@
-package com.cn.viewDarg;
+package com.cn.viewdarg;
 
 import android.graphics.Color;
 import android.os.Bundle;

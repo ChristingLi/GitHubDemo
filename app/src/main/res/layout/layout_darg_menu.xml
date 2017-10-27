@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cn.viewDarg.DragMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cn.viewdarg.DragMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -58,4 +58,4 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-</com.cn.viewDarg.DragMenuLayout>
+</com.cn.viewdarg.DragMenuLayout>

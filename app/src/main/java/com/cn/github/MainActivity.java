@@ -11,15 +11,22 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.alphatab.AlphaActivity;
 import com.cn.bean.JsonEntity;
+import com.cn.customview.Keyboard;
+import com.cn.customview.SwitchButton;
+import com.cn.customview.SwitchButtons;
 import com.cn.dbfile.GreenDaoEntity;
 import com.cn.dbfile.GreenDaoEntityDao;
 import com.cn.horizontalScroll.SlidingActivity;
@@ -30,9 +37,9 @@ import com.cn.train.FarstJsonTrain;
 import com.cn.utils.GreenDaoManager;
 import com.cn.utils.HttpUtils;
 import com.cn.utils.ToastUtil;
-import com.cn.viewDarg.DragMenuActivity;
-import com.cn.viewDarg.DragViewHelperActivity;
-import com.cn.viewDarg.HorizontalDragActivity;
+import com.cn.viewdarg.DragMenuActivity;
+import com.cn.viewdarg.DragViewHelperActivity;
+import com.cn.viewdarg.HorizontalDragActivity;
 import com.cn.application.MyApplication;
 import com.cn.base.LoginLogic;
 import com.gyf.barlibrary.ImmersionBar;
@@ -69,19 +76,51 @@ public class MainActivity extends AppCompatActivity implements
     Button mbtEntity;
     @BindViews({R.id.btn_list,R.id.btn_byte,R.id.btn_complex,R.id.btn_json,R.id.btn_green_insert,R.id.btn_green_read})
     List<Button> buttons;
+    @BindView(R.id.switch_button)
+    SwitchButton mSwitchButton;
+    @BindView(R.id.switch_buttons)
+    SwitchButtons switchButtons;
+    @BindView(R.id.tv_input)
+    TextView tvInput;
+//    @BindView(R.id.key_board)
+//    Keyboard mKeyboard;
+//    private String str = "";
+    @BindView(R.id.edit_watch_1)
+    EditText mEtWatch1;
+    @BindView(R.id.edit_watch_2)
+    EditText mEtWatch2;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//        Transition explode = TransitionInflater.from(this).inflateTransition(R.transition.slide);
-//        getWindow().setExitTransition(explode);
-//        getWindow().setEnterTransition(explode);
-//        getWindow().setReenterTransition(explode);
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        switchButtons.setChecked(true);
+        switchButtons.setOnCheckedChangeListener(new SwitchButtons.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButtons view, boolean isChecked) {
+                ToastUtil.showShortToast("123");
+            }
+        });
+        setWatch();
+//        mKeyboard.setOnNumberClickListener(new Keyboard.OnNumberClickListener() {
+//            @Override
+//            public void onNumberReturn(String number) {
+//                str += number;
+//                tvInput.setText(str);
+//            }
+//            @Override
+//            public void onNumberDelete() {
+//                if (str.length() <= 1) {
+//                    str = "";
+//                } else {
+//                    str = str.substring(0, str.length() - 1);
+//                }
+//                tvInput.setText(str);
+//            }
+//        });
+
 
         mImmersionBar = ImmersionBar.with(this);
                 mImmersionBar.transparentStatusBar()  //透明状态栏，不写默认透明色
@@ -129,6 +168,41 @@ public class MainActivity extends AppCompatActivity implements
 
 //        StatusBarCompat.compat(this,R.color.transparent);
 
+    }
+    private WatchListener1 watchListener1 = new WatchListener1();
+    private WatchListener2 watchListener2 = new WatchListener2();
+    private void setWatch() {
+
+        mEtWatch1.addTextChangedListener(watchListener1);
+        mEtWatch2.addTextChangedListener(watchListener2);
+    }
+    class WatchListener1 implements TextWatcher{
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        @Override
+        public void afterTextChanged(Editable editable) {
+            mEtWatch2.removeTextChangedListener(watchListener2);
+            mEtWatch2.setText(editable.toString());
+            mEtWatch2.addTextChangedListener(watchListener2);
+        }
+    }
+    class WatchListener2 implements TextWatcher{
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        @Override
+        public void afterTextChanged(Editable editable) {
+            mEtWatch1.removeTextChangedListener(watchListener1);
+            mEtWatch1.setText(editable.toString());
+            mEtWatch1.addTextChangedListener(watchListener1);
+        }
     }
     @OnClick(R.id.btn_green_insert)
     public void greedDaoInsert(){

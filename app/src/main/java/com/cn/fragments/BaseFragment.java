@@ -113,6 +113,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 绑定布局
+     * @return
      */
     protected abstract int setLayoutId();
 
