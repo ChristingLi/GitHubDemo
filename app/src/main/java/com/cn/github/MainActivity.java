@@ -14,16 +14,20 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.alphatab.AlphaActivity;
 import com.cn.bean.JsonEntity;
+import com.cn.customview.AutoLine;
 import com.cn.customview.Keyboard;
 import com.cn.customview.SwitchButton;
 import com.cn.customview.SwitchButtons;
@@ -80,15 +84,11 @@ public class MainActivity extends AppCompatActivity implements
     SwitchButton mSwitchButton;
     @BindView(R.id.switch_buttons)
     SwitchButtons switchButtons;
-    @BindView(R.id.tv_input)
-    TextView tvInput;
+    @BindView(R.id.auto_line)
+    AutoLine mAntoLine;
 //    @BindView(R.id.key_board)
 //    Keyboard mKeyboard;
 //    private String str = "";
-    @BindView(R.id.edit_watch_1)
-    EditText mEtWatch1;
-    @BindView(R.id.edit_watch_2)
-    EditText mEtWatch2;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements
                 ToastUtil.showShortToast("123");
             }
         });
-        setWatch();
+        initAuto();
 //        mKeyboard.setOnNumberClickListener(new Keyboard.OnNumberClickListener() {
 //            @Override
 //            public void onNumberReturn(String number) {
@@ -169,41 +169,21 @@ public class MainActivity extends AppCompatActivity implements
 //        StatusBarCompat.compat(this,R.color.transparent);
 
     }
-    private WatchListener1 watchListener1 = new WatchListener1();
-    private WatchListener2 watchListener2 = new WatchListener2();
-    private void setWatch() {
 
-        mEtWatch1.addTextChangedListener(watchListener1);
-        mEtWatch2.addTextChangedListener(watchListener2);
-    }
-    class WatchListener1 implements TextWatcher{
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-        @Override
-        public void afterTextChanged(Editable editable) {
-            mEtWatch2.removeTextChangedListener(watchListener2);
-            mEtWatch2.setText(editable.toString());
-            mEtWatch2.addTextChangedListener(watchListener2);
+    private void initAuto() {
+        for(int i=0; i < 10;i++){
+            View item = LayoutInflater.from(this).inflate(R.layout.button_sample,null);
+            Button itemBtn = item.findViewById(R.id.btn_sample);
+            String text = "测试数据测试测试蹲厕所洒大地上大树大根深测试数据测试测试蹲厕所洒大地上大树大根深测试数据测试测试蹲厕所" +
+                    "洒大地上大树大根深测试数据测试测试蹲厕所洒大地上大树大根深测试数据测试测试蹲厕所洒大地上大树大根深测试数据测试测试蹲厕所洒大地上大树大根深";
+            itemBtn.setText(text.substring(0,i+1));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(2,0,2,0);
+            item.setLayoutParams(params);
+            mAntoLine.addView(item);
         }
     }
-    class WatchListener2 implements TextWatcher{
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-        @Override
-        public void afterTextChanged(Editable editable) {
-            mEtWatch1.removeTextChangedListener(watchListener1);
-            mEtWatch1.setText(editable.toString());
-            mEtWatch1.addTextChangedListener(watchListener1);
-        }
-    }
+
     @OnClick(R.id.btn_green_insert)
     public void greedDaoInsert(){
         GreenDaoEntity entity = new GreenDaoEntity(null,"GreenDao");

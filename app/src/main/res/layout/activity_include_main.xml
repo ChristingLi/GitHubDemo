@@ -122,19 +122,10 @@
         android:layout_height="250dp"
         android:id="@+id/key_board"/>
     -->
-    <EditText
-        android:hint="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_watch_1"/>
-    <EditText
-        android:hint="2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_watch_2"/>
-    <TextView
-        android:id="@+id/tv_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="123123"/>
+    <com.cn.customview.AutoLine
+        android:id="@+id/auto_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.cn.customview.AutoLine>
 </LinearLayout>
