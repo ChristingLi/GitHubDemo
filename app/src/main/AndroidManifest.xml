@@ -50,6 +50,7 @@
         <activity android:name="com.cn.project.HomeActivity"></activity>
         <activity android:name="com.cn.project.PlanTwoActivity"></activity>
         <activity android:name="com.cn.alphatab.AlphaActivity"></activity>
+        <activity android:name=".HorTab" ></activity>
     </application>
 
 </manifest>
