@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements
     }
     private void initViews(){
         mDrawerLayout = findViewById(R.id.drawlayout);
-        mDrawerLayout.addDrawerListener(new MyDrawerLayoutListener(mImmersionBar));
+//        mDrawerLayout.addDrawerListener(new MyDrawerLayoutListener(mImmersionBar));
         mToolbar = findViewById(R.id.toolbar);
         tvTest = findViewById(R.id.test_text);
         btnTest = findViewById(R.id.test_btn);
@@ -237,7 +237,20 @@ public class MainActivity extends AppCompatActivity implements
         mDrawerLayout.addDrawerListener(toogle);
         toogle.syncState();
     }
-
+    class DrawLayoutListener implements DrawerLayout.DrawerListener {
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {
+        }
+        @Override
+        public void onDrawerOpened(View drawerView) {
+        }
+        @Override
+        public void onDrawerClosed(View drawerView) {
+        }
+        @Override
+        public void onDrawerStateChanged(int newState) {
+        }
+    }
     @SuppressLint("NewApi")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

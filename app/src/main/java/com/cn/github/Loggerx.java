@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by ld on 2017/10/16.
  */
 
-public class Logger {
+public class Loggerx {
     private void logger() {
         com.orhanobut.logger.Logger.addLogAdapter(new AndroidLogAdapter());
         com.orhanobut.logger.Logger.d("123");

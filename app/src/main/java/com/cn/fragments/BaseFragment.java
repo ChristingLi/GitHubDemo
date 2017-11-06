@@ -12,6 +12,12 @@ import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * Created by ld on 2017/10/17.
@@ -20,7 +26,7 @@ import com.kingja.loadsir.core.LoadSir;
  */
 
 public abstract class BaseFragment extends Fragment {
-
+    public Unbinder unbinder;
     public Context mContext;
     protected View mRootView;
     protected LoadService mBaseLoadService;
@@ -52,6 +58,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mRootView = inflater.inflate(setLayoutId(), container, false);
+        unbinder = ButterKnife.bind(this,mRootView);
         initView();
         mBaseLoadService = LoadSir.getDefault().register(mRootView, new Callback.OnReloadListener() {
             @Override
@@ -64,6 +71,11 @@ public abstract class BaseFragment extends Fragment {
         return mBaseLoadService.getLoadLayout();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

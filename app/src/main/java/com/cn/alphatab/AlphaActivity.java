@@ -12,13 +12,19 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.Window;
 
+import com.cn.bean.MessEvent;
 import com.cn.fragments.HomeFragment;
 import com.cn.fragments.MapFragment;
 import com.cn.fragments.MesFragment;
 import com.cn.fragments.PerFragment;
 import com.cn.github.R;
 import com.cn.project.HomeActivity;
+import com.orhanobut.logger.Logger;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +42,13 @@ public class AlphaActivity extends AppCompatActivity{
     ViewPager mViewPager;
     @BindView(R.id.alphaIndicator)
     AlphaTabsIndicator mAlphaTabsIndicator;
+
     @Override
     public void onCreate( Bundle savedInstanceState  ) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_alpha_tab);
         ButterKnife.bind(this);
-        Transition explode = TransitionInflater.from(this).inflateTransition(R.transition.explose);
-        getWindow().setEnterTransition(explode);
 
         MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
         mainAdapter.setFragments(new HomeFragment());
@@ -57,6 +62,22 @@ public class AlphaActivity extends AppCompatActivity{
         mAlphaTabsIndicator.getTabView(1).showNumber(888);
         mAlphaTabsIndicator.getTabView(2).showNumber(88);
         mAlphaTabsIndicator.getTabView(3).showPoint();
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Logger.d("onDestroy");
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessEvent event){
+        Logger.d(event.message+"[Receive Mes]");
 
     }
     private class MainAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener{
