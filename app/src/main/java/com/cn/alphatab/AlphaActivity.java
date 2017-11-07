@@ -46,7 +46,8 @@ public class AlphaActivity extends AppCompatActivity{
     @Override
     public void onCreate( Bundle savedInstanceState  ) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        /* 过渡效果*/
+//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_alpha_tab);
         ButterKnife.bind(this);
 

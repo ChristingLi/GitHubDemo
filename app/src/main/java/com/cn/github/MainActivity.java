@@ -25,7 +25,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.bumptech.glide.Glide;
 import com.cn.alphatab.AlphaActivity;
+import com.cn.bean.ImageBean;
 import com.cn.bean.JsonEntity;
 import com.cn.customview.AutoLine;
 import com.cn.customview.Keyboard;
@@ -272,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements
             Intent mIntent = new Intent(MainActivity.this, DragViewHelperActivity.class);
             startActivity(mIntent);
         }else if(id == R.id.nav_5){
-            ToastUtil.showShortToast("即将进入简书");
+            ToastUtil.showShortToast("即将进入");
             Intent mIntent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(mIntent);
         }else if(id == R.id.nav_6){
@@ -315,14 +318,17 @@ public class MainActivity extends AppCompatActivity implements
                     try {
                         if (response != null && !"".equals(response)){
                             //解析
-                            JSONObject responseObj = new JSONObject(response);
-                            tvTest.setText(responseObj.toString());
-                        }
-                        else {
+//                            JSONObject responseObj = new JSONObject(response);
+//                            tvTest.setText(responseObj.toString());
+                            com.alibaba.fastjson.JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(response);
+                            JSONArray array = jsonObject.getJSONArray("美女");
+                            List<ImageBean> data = JSON.parseArray(array.toJSONString(), ImageBean.class);
+                            Logger.d(data);
+                        } else {
                             ToastUtil.showShortToast(MyApplication.getAppContext().getResources().getString(R.string.login_null_exception));
                         }
-                    } catch (JSONException e) {
-                        ToastUtil.showShortToast(MyApplication.getAppContext().getResources().getString(R.string.login_json_exception));
+//                    } catch (JSONException e) {
+//                        ToastUtil.showShortToast(MyApplication.getAppContext().getResources().getString(R.string.login_json_exception));
                     }catch (Exception e) {
                         ToastUtil.showShortToast(MyApplication.getAppContext().getResources().getString(R.string.login_json_exception));
                     } finally {
