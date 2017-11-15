@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -19,13 +17,11 @@ import com.cn.adapter.WaterFallAdapter;
 import com.cn.application.MyApplication;
 import com.cn.base.LoginLogic;
 import com.cn.bean.ImageBean;
-import com.cn.github.MainActivity;
 import com.cn.github.R;
 import com.cn.utils.PostUtil;
 import com.cn.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -34,9 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Request;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 /**
  * Created by ld on 2017/10/17.
@@ -70,12 +67,13 @@ public class HomeFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         });
-        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(2000);
-            }
-        });
+//        mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+//            @Override
+//            public void onLoadmore(RefreshLayout refreshlayout) {
+//                refreshlayout.finishLoadmore(2000);
+//            }
+//        });
+
     }
 
     @Override
@@ -85,10 +83,14 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        mRecyclerView.setLayoutManager(new
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        manager.setItemPrefetchEnabled(false);
+        mRecyclerView.setLayoutManager(manager);
         mAdapter = new WaterFallAdapter(mContext);
-        mPool = mRecyclerView.getRecycledViewPool();
+
+        if(mRecyclerView.getRecycledViewPool()!=null){
+            mRecyclerView.getRecycledViewPool().setMaxRecycledViews(0, 10);
+        }
         try {
             LoginLogic.Instance(mContext).getJson(new GetJsonStringCallback());
         } catch (Exception e) {

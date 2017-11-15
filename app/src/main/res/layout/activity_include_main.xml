@@ -4,26 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cn.github.MainActivity"
     android:orientation="vertical"
-    >
+    tools:context="com.cn.github.MainActivity">
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center"
             android:background="@color/gray"
-            android:fitsSystemWindows="false"
-            android:layout_gravity="center">
+            android:fitsSystemWindows="false">
+
             <TextView
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GitHubDemo"/>
+                android:layout_gravity="center"
+                android:text="GitHubDemo" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,25 +35,29 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
+            android:id="@+id/test_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
             android:text="Btn"
-            android:id="@+id/test_btn"/>
+            android:textAllCaps="false" />
+
         <com.cn.customview.SwitchButton
-            android:visibility="gone"
             android:id="@+id/switch_button"
             android:layout_width="120dp"
             android:layout_height="60dp"
-             />
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/ll_switch_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <com.cn.customview.SwitchButtons
                 android:id="@+id/switch_buttons"
                 android:layout_width="wrap_content"
@@ -59,74 +66,106 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/test_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/test_text"
+        android:layout_margin="5dp"
         android:hint="接收数据"
-        android:textSize="17sp"
-        android:layout_margin="5dp"/>
+        android:textSize="17sp" />
+
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
         <Button
             android:id="@+id/btn_entity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="实体转化Json"/>
+            android:text="实体转化Json" />
+
         <Button
             android:id="@+id/btn_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="list转化Json"/>
+            android:text="list转化Json" />
+
         <Button
             android:id="@+id/btn_byte"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="字符串数组转化Json"/>
+            android:text="字符串数组转化Json" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/btn_complex"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="复杂数据类型Json"/>
+            android:text="复杂数据类型Json" />
+
         <Button
             android:id="@+id/btn_json"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Json转化实体"/>
+            android:text="Json转化实体" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:id="@+id/btn_green_insert"
-            android:textAllCaps="false"
-            android:text="GreenDao添加数据"/>
-        <Button
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GreenDao添加数据"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/btn_green_read"
-            android:textAllCaps="false"
-            android:text="GreenDao读取数据"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GreenDao读取数据"
+            android:textAllCaps="false" />
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测试"
-        android:id="@+id/test"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试" />
+
+        <Button
+            android:id="@+id/btn_shop_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ShoppingCart"
+            android:textAllCaps="false" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Zx"
+            android:id="@+id/btn_zx"/>
+    </LinearLayout>
+
+
     <!--
     <com.cn.customview.Keyboard
         android:layout_width="wrap_content"

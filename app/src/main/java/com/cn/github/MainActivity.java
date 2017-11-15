@@ -40,6 +40,7 @@ import com.cn.horizontalScroll.SlidingActivity;
 import com.cn.listener.MyDrawerLayoutListener;
 import com.cn.project.HomeActivity;
 import com.cn.project.PlanTwoActivity;
+import com.cn.shopping.ShoppingActivity;
 import com.cn.train.FarstJsonTrain;
 import com.cn.utils.GreenDaoManager;
 import com.cn.utils.HttpUtils;
@@ -51,6 +52,7 @@ import com.cn.application.MyApplication;
 import com.cn.base.LoginLogic;
 import com.gyf.barlibrary.ImmersionBar;
 import com.orhanobut.logger.Logger;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
@@ -91,6 +93,11 @@ public class MainActivity extends AppCompatActivity implements
     LinearLayout mSwitchll;
     @BindView(R.id.test)
     Button mTestBtn;
+    @BindView(R.id.btn_shop_cart)
+    Button mBtShopCart;
+    @BindView(R.id.btn_zx)
+    Button mBtZx;
+    public static final int REQUEST_CODE = 111;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +110,10 @@ public class MainActivity extends AppCompatActivity implements
         mSwitchButton.setEnabled(false);
         switchClick();
         initAuto();
-        initSwitchTest();
         initImmerSionBar();
         initViews();
         initEvent();
         dao = GreenDaoManager.getInstance().getGreedDaoSession().getGreenDaoEntityDao();
-
-//        StatusBarCompat.compat(this,R.color.transparent);
         mTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,13 +147,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
-
-    private void initSwitchTest() {
-
-    }
-
-
-
     private void initAuto() {
         for(int i=0; i < 10;i++){
             View item = LayoutInflater.from(this).inflate(R.layout.button_sample,null);
@@ -162,6 +159,16 @@ public class MainActivity extends AppCompatActivity implements
             item.setLayoutParams(params);
             mAutoLine.addView(item);
         }
+    }
+    @OnClick(R.id.btn_zx)
+    public void zxClick(){
+        Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
+        startActivityForResult(intent,REQUEST_CODE);
+    }
+    @OnClick(R.id.btn_shop_cart)
+    public void shopCart(View view){
+        Intent intent = new Intent(this, ShoppingActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_green_insert)

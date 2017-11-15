@@ -25,6 +25,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
@@ -80,6 +81,7 @@ public class MyApplication extends Application{
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
         loadSir();
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     /**
