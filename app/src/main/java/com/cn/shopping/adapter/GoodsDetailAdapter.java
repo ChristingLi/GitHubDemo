@@ -14,9 +14,6 @@ import com.cn.shopping.bean.ItemBean;
 import java.util.List;
 
 
-/**
- * Created by fengyongge on 2016/5/24 0024.
- */
 public class GoodsDetailAdapter extends BaseAdapter {
     private List<ItemBean> list;
     private Activity activity;
@@ -42,24 +39,24 @@ public class GoodsDetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Viewholder viewholder;
+        final ViewHolder viewholder;
         if (convertView==null){
             convertView= LayoutInflater.from(activity).inflate(R.layout.activity_goods_detail_item,null);
-            viewholder=new Viewholder();
-            viewholder.tv_name= (TextView) convertView.findViewById(R.id.tv_name);
-            viewholder.tv_price= (TextView) convertView.findViewById(R.id.tv_price);
+            viewholder=new ViewHolder();
+            viewholder.mTvName =  convertView.findViewById(R.id.tv_name);
+            viewholder.mTvPrice =  convertView.findViewById(R.id.tv_price);
 
             convertView.setTag(viewholder);
         }else {
-            viewholder = (Viewholder) convertView.getTag();
+            viewholder = (ViewHolder) convertView.getTag();
 
         }
-        viewholder.tv_name.setText(list.get(position).getValue()+"*"+list.get(position).getNote2());
-        viewholder.tv_price.setText("￥"+list.get(position).getNote1());
+        viewholder.mTvName.setText(list.get(position).getValue()+"*"+list.get(position).getNote2());
+        viewholder.mTvPrice.setText("￥"+list.get(position).getNote1());
         return convertView;
     }
-    class Viewholder{
-        TextView tv_name,tv_price;
+    class ViewHolder {
+        TextView mTvName, mTvPrice;
 
     }
 

@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.cn.github.MainActivity;
 import com.cn.github.R;
 import com.cn.shopping.ShoppingActivity;
 import com.cn.shopping.bean.GoodsBean;
@@ -63,66 +62,66 @@ public class GoodsAdapter extends BaseAdapter{
         if (convertView==null){
             convertView= LayoutInflater.from(mContext).inflate(R.layout.shopcart_right_listview,null);
             viewholder=new ViewHolder();
-            viewholder.tv_name= (TextView) convertView.findViewById(R.id.tv_name);
-            viewholder.tv_original_price= (TextView) convertView.findViewById(R.id.tv_original_price);
-            viewholder.tv_price= (TextView) convertView.findViewById(R.id.tv_price);
-            viewholder.iv_add= (ImageView) convertView.findViewById(R.id.iv_add);
-            viewholder.iv_remove= (ImageView) convertView.findViewById(R.id.iv_remove);
-            viewholder.tv_acount= (TextView) convertView.findViewById(R.id.tv_acount);
-            viewholder.iv_pic= (ImageView) convertView.findViewById(R.id.iv_pic);
-            viewholder.rl_item= (RelativeLayout) convertView.findViewById(R.id.rl_item);
+            viewholder.mTvName = (TextView) convertView.findViewById(R.id.tv_name);
+            viewholder.mTvOriginPrice = (TextView) convertView.findViewById(R.id.tv_original_price);
+            viewholder.mTvPrice = (TextView) convertView.findViewById(R.id.tv_price);
+            viewholder.mImgAdd = (ImageView) convertView.findViewById(R.id.iv_add);
+            viewholder.mImgRemove = (ImageView) convertView.findViewById(R.id.iv_remove);
+            viewholder.mTvAccount = (TextView) convertView.findViewById(R.id.tv_acount);
+            viewholder.mImgPic = (ImageView) convertView.findViewById(R.id.iv_pic);
+            viewholder.mRelaItem = (RelativeLayout) convertView.findViewById(R.id.rl_item);
             convertView.setTag(viewholder);
         }else {
             viewholder = (ViewHolder) convertView.getTag();
 
         }
-        viewholder.tv_name.setText(list.get(position).getTitle());
-        viewholder.tv_original_price.setText("￥"+list.get(position).getOriginal_price());
-        viewholder.tv_original_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
-        viewholder.tv_price.setText("￥"+list.get(position).getPrice());
+        viewholder.mTvName.setText(list.get(position).getTitle());
+        viewholder.mTvOriginPrice.setText("￥"+list.get(position).getOriginal_price());
+        viewholder.mTvOriginPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+        viewholder.mTvPrice.setText("￥"+list.get(position).getPrice());
 
 
         if(list.get(position)!=null){
             //默认进来数量
             if (list.get(position).getNum()<1){
-                viewholder.tv_acount.setVisibility(View.INVISIBLE);
-                viewholder.iv_remove.setVisibility(View.INVISIBLE);
+                viewholder.mTvAccount.setVisibility(View.INVISIBLE);
+                viewholder.mImgRemove.setVisibility(View.INVISIBLE);
                 catogaryAdapter.notifyDataSetChanged();
             }else{
-                viewholder.tv_acount.setVisibility(View.VISIBLE);
-                viewholder.iv_remove.setVisibility(View.VISIBLE);
-                viewholder.tv_acount.setText(String.valueOf(list.get(position).getNum()));
+                viewholder.mTvAccount.setVisibility(View.VISIBLE);
+                viewholder.mImgRemove.setVisibility(View.VISIBLE);
+                viewholder.mTvAccount.setText(String.valueOf(list.get(position).getNum()));
                 catogaryAdapter.notifyDataSetChanged();
             }
         }else{
-            viewholder.tv_acount.setVisibility(View.INVISIBLE);
-            viewholder.iv_remove.setVisibility(View.INVISIBLE);
+            viewholder.mTvAccount.setVisibility(View.INVISIBLE);
+            viewholder.mImgRemove.setVisibility(View.INVISIBLE);
         }
 
         //商品图片
         if(list.get(position).getIcon()!=null){
-            Glide.with(mContext).load(list.get(position).getIcon()).into(viewholder.iv_pic);
+            Glide.with(mContext).load(list.get(position).getIcon()).into(viewholder.mImgPic);
 //            ImageLoader.getInstance().displayImage(
-//                    list.get(position).getIcon(), viewholder.iv_pic);
+//                    list.get(position).getIcon(), viewholder.mImgPic);
         }
 
 
-        viewholder.iv_add.setOnClickListener(new View.OnClickListener() {
+        viewholder.mImgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int count = ((ShoppingActivity)mContext).getSelectedItemCountById(list.get(position).getProduct_id());
-                Log.i("fyg","iv_add"+String.valueOf(count));
+                Log.i("fyg","mImgAdd"+String.valueOf(count));
                 if (count < 1) {
-                    viewholder.iv_remove.setAnimation(getShowAnimation());
-                    viewholder.iv_remove.setVisibility(View.VISIBLE);
-                    viewholder.tv_acount.setVisibility(View.VISIBLE);
+                    viewholder.mImgRemove.setAnimation(getShowAnimation());
+                    viewholder.mImgRemove.setVisibility(View.VISIBLE);
+                    viewholder.mTvAccount.setVisibility(View.VISIBLE);
                 }
 
                 ((ShoppingActivity)mContext).handlerCarNum(1,list.get(position),true);
                 catogaryAdapter.notifyDataSetChanged();
 
                 int[] loc = new int[2];
-                viewholder.iv_add.getLocationInWindow(loc);
+                viewholder.mImgAdd.getLocationInWindow(loc);
                 for (int i=0;i<loc.length;i++)
                 {
                     Log.i("fyg",String.valueOf(loc[i]));
@@ -136,15 +135,15 @@ public class GoodsAdapter extends BaseAdapter{
             }
         });
 
-        viewholder.iv_remove.setOnClickListener(new View.OnClickListener() {
+        viewholder.mImgRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int count = ((ShoppingActivity)mContext).getSelectedItemCountById(list.get(position).getProduct_id());
-                Log.i("fyg","iv_remove"+String.valueOf(count));
+                Log.i("fyg","mImgRemove"+String.valueOf(count));
                 if (count < 2) {
-                    viewholder.iv_remove.setAnimation(getHiddenAnimation());
-                    viewholder.iv_remove.setVisibility(View.GONE);
-                    viewholder.tv_acount.setVisibility(View.GONE);
+                    viewholder.mImgRemove.setAnimation(getHiddenAnimation());
+                    viewholder.mImgRemove.setVisibility(View.GONE);
+                    viewholder.mTvAccount.setVisibility(View.GONE);
                 }
                 ((ShoppingActivity)mContext).handlerCarNum(0,list.get(position),true);
                 catogaryAdapter.notifyDataSetChanged();
@@ -152,7 +151,7 @@ public class GoodsAdapter extends BaseAdapter{
             }
         });
 
-        viewholder.rl_item.setOnClickListener(new View.OnClickListener() {
+        viewholder.mRelaItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                if(list.get(position).getPackage_product_info()!=null&&list.get(position).getTitle()!=null){
@@ -166,10 +165,10 @@ public class GoodsAdapter extends BaseAdapter{
         return convertView;
     }
     class ViewHolder{
-        TextView tv_name,tv_original_price,tv_price;
-        ImageView iv_add,iv_remove,iv_pic;
-        TextView tv_acount;
-        RelativeLayout rl_item;
+        TextView mTvName, mTvOriginPrice, mTvPrice;
+        ImageView mImgAdd, mImgRemove, mImgPic;
+        TextView mTvAccount;
+        RelativeLayout mRelaItem;
     }
     //显示减号的动画
     private Animation getShowAnimation(){

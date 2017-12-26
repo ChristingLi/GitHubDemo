@@ -299,8 +299,6 @@ public class ShoppingActivity extends AppCompatActivity {
                     goodsBean.setNum(--i);
                 }
             }
-
-
         } else if (type == 1) {
             GoodsBean temp = selectedList.get(goodsBean.getProduct_id());
             if (temp == null) {

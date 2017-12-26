@@ -65,6 +65,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mvp.MvpActivity;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -162,8 +163,8 @@ public class MainActivity extends AppCompatActivity implements
     }
     @OnClick(R.id.btn_zx)
     public void zxClick(){
-        Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
-        startActivityForResult(intent,REQUEST_CODE);
+        Intent intent = new Intent(MainActivity.this, MvpActivity.class);
+        startActivity(intent);
     }
     @OnClick(R.id.btn_shop_cart)
     public void shopCart(View view){
@@ -353,10 +354,11 @@ public class MainActivity extends AppCompatActivity implements
     }
     private void initImmerSionBar() {
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.transparentStatusBar()  //透明状态栏，不写默认透明色
+        mImmersionBar
+//                .transparentStatusBar()  //透明状态栏，不写默认透明色
 //                .transparentNavigationBar()  //透明导航栏，不写默认黑色(设置此方法，fullScreen()方法自动为true)
-//                .transparentBar()             //透明状态栏和导航栏，不写默认状态栏为透明色，导航栏为黑色（设置此方法，fullScreen()方法自动为true）
-                .statusBarColor(R.color.orange)     //状态栏颜色，不写默认透明色
+                .transparentBar()             //透明状态栏和导航栏，不写默认状态栏为透明色，导航栏为黑色（设置此方法，fullScreen()方法自动为true）
+//                .statusBarColor(R.color.orange)     //状态栏颜色，不写默认透明色
 //               .navigationBarColor(R.color.orange) //导航栏颜色，不写默认黑色
 //              .barColor(R.color.orange)  //同时自定义状态栏和导航栏颜色，不写默认状态栏为透明色，导航栏为黑色
                 .statusBarAlpha(0.0f)  //状态栏透明度，不写默认0.0f

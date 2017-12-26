@@ -51,13 +51,13 @@ public class CatograyAdapter extends BaseAdapter{
         if(view == null){
             view = LayoutInflater.from(mContext).inflate(R.layout.shopcart_left_listview,null);
             viewHolder = new ViewHolder();
-            viewHolder.tv_catogray = view.findViewById(R.id.tv_catogray);
-            viewHolder.tv_count = view.findViewById(R.id.tv_count);
+            viewHolder.mTvCatogray = view.findViewById(R.id.tv_catogray);
+            viewHolder.mTvCount = view.findViewById(R.id.tv_count);
             view.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) view.getTag();
         }
-            viewHolder.tv_catogray.setText(list.get(position).getKind());
+            viewHolder.mTvCatogray.setText(list.get(position).getKind());
             int count = 0;
             for (int i = 0; i < list.get(position).getList().size(); i++) {
                 count += list.get(position).getList().get(i).getNum();
@@ -65,17 +65,17 @@ public class CatograyAdapter extends BaseAdapter{
             list.get(position).setCount(count);
 
             if (count <= 0) {
-                viewHolder.tv_count.setVisibility(View.INVISIBLE);
+                viewHolder.mTvCount.setVisibility(View.INVISIBLE);
             } else {
-                viewHolder.tv_count.setVisibility(View.VISIBLE);
-                viewHolder.tv_count.setText(list.get(position).getCount()+"");
+                viewHolder.mTvCount.setVisibility(View.VISIBLE);
+                viewHolder.mTvCount.setText(list.get(position).getCount()+"");
             }
             if (position == selection) {
-                viewHolder.tv_catogray.setBackgroundResource(R.drawable.rec_red_left_stroke);
-                viewHolder.tv_catogray.setTextColor(mContext.getResources().getColor(R.color.black));
+                viewHolder.mTvCatogray.setBackgroundResource(R.drawable.rec_red_left_stroke);
+                viewHolder.mTvCatogray.setTextColor(mContext.getResources().getColor(R.color.black));
             } else {
-                viewHolder.tv_catogray.setBackgroundResource(R.drawable.empty);
-                viewHolder.tv_catogray.setTextColor(mContext.getResources().getColor(R.color.gray));
+                viewHolder.mTvCatogray.setBackgroundResource(R.drawable.empty);
+                viewHolder.mTvCatogray.setTextColor(mContext.getResources().getColor(R.color.gray));
             }
         return view;
     }
@@ -83,7 +83,7 @@ public class CatograyAdapter extends BaseAdapter{
         this.selection = selection;
     }
     class ViewHolder{
-        TextView tv_catogray;
-        TextView tv_count;
+        TextView mTvCatogray;
+        TextView mTvCount;
     }
 }
