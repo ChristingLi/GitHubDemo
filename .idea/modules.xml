@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GitHubDemo.iml" filepath="$PROJECT_DIR$/GitHubDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/testviewpager/testviewpager.iml" filepath="$PROJECT_DIR$/testviewpager/testviewpager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testviewpager/testviewpager.iml" filepath="$PROJECT_DIR$/.idea/modules/testviewpager/testviewpager.iml" />
     </modules>
   </component>
 </project>

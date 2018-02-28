@@ -164,7 +164,12 @@
             android:text="Zx"
             android:id="@+id/btn_zx"/>
     </LinearLayout>
-
+    <Button
+        android:id="@+id/btn_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="自定义FrangemtDialog"/>
 
     <!--
     <com.cn.customview.Keyboard

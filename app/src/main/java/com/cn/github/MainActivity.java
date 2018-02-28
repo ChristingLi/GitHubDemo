@@ -36,6 +36,7 @@ import com.cn.customview.SwitchButton;
 import com.cn.customview.SwitchButtons;
 import com.cn.dbfile.GreenDaoEntity;
 import com.cn.dbfile.GreenDaoEntityDao;
+import com.cn.fragmentdialog.FragmentDialogActivity;
 import com.cn.horizontalScroll.SlidingActivity;
 import com.cn.listener.MyDrawerLayoutListener;
 import com.cn.project.HomeActivity;
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements
     Button mBtShopCart;
     @BindView(R.id.btn_zx)
     Button mBtZx;
+    @BindView(R.id.btn_dialog)
+    Button mFragmentDialog;
     public static final int REQUEST_CODE = 111;
     @SuppressLint("NewApi")
     @Override
@@ -123,7 +126,10 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
-
+    @OnClick(R.id.btn_dialog)
+    public void btnDialong(){
+        startActivity(new Intent(this, FragmentDialogActivity.class));
+    }
     private void switchClick() {
         mSwitchll.setOnClickListener(new View.OnClickListener() {
             @Override

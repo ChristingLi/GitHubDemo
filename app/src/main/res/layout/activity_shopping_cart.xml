@@ -141,13 +141,13 @@
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:choiceMode="singleChoice"></ListView>
+                    android:choiceMode="singleChoice"/>
 
                 <ListView
                     android:id="@+id/lv_good"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
-                    android:layout_weight="3"></ListView>
+                    android:layout_weight="3"/>
             </LinearLayout>
 
 
